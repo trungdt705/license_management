@@ -1,7 +1,7 @@
-import React from 'react';
-import Routes from '../routes/Routes';
-import { IntlProvider } from 'react-intl';
-import { connect } from 'react-redux';
+import React from "react";
+import Routes from "../routes/Routes";
+import { IntlProvider } from "react-intl";
+import { connect } from "react-redux";
 class App extends React.Component {
 	render() {
 		const { lang, loading } = this.props;
@@ -17,7 +17,7 @@ class App extends React.Component {
 
 const mapStateToProps = ({ lang, loading }) => ({
 	lang,
-	loading
+	loading,
 });
 
 export default connect(mapStateToProps, {})(App);

@@ -1,5 +1,5 @@
-import React from 'react';
-import clsx from 'clsx';
+import React from "react";
+import clsx from "clsx";
 import {
 	Drawer,
 	IconButton,
@@ -7,41 +7,40 @@ import {
 	List,
 	makeStyles,
 	useTheme,
-	Hidden
-} from '@material-ui/core';
-import { ChevronLeft as ChevronLeftIcon } from '@material-ui/icons';
-import ListItemLink from '../../components/ListItem/ListItem';
-import { MENU as menu } from '../../utils/contants/menu';
+	Hidden,
+} from "@material-ui/core";
+import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
+import ListItemLink from "../../components/ListItem/ListItem";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		display: 'flex'
+		display: "flex",
 	},
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
-		whiteSpace: 'nowrap'
+		whiteSpace: "nowrap",
 	},
 	drawerOpen: {
 		width: drawerWidth,
-		transition: theme.transitions.create('width', {
+		transition: theme.transitions.create("width", {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	drawerClose: {
-		transition: theme.transitions.create('width', {
+		transition: theme.transitions.create("width", {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
+			duration: theme.transitions.duration.leavingScreen,
 		}),
-		overflowX: 'hidden',
+		overflowX: "hidden",
 		width: theme.spacing(7) + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(9) + 1
-		}
-	}
+		[theme.breakpoints.up("sm")]: {
+			width: theme.spacing(9) + 1,
+		},
+	},
 }));
 
 const CustomDrawer = (props) => {
@@ -54,13 +53,13 @@ const CustomDrawer = (props) => {
 				variant="permanent"
 				className={clsx(classes.drawer, {
 					[classes.drawerOpen]: props.open,
-					[classes.drawerClose]: !props.open
+					[classes.drawerClose]: !props.open,
 				})}
 				classes={{
 					paper: clsx({
 						[classes.drawerOpen]: props.open,
-						[classes.drawerClose]: !props.open
-					})
+						[classes.drawerClose]: !props.open,
+					}),
 				}}
 			>
 				<div className={classes.toolbar}>
@@ -70,14 +69,14 @@ const CustomDrawer = (props) => {
 				</div>
 				<Divider />
 				<List>
-					{menu.map((item) => (
+					{/* {menu.map((item) => (
 						<ListItemLink
 							key={item.link}
 							to={item.link}
 							name={item.name}
 							icon={item.icon}
 						/>
-					))}
+					))} */}
 				</List>
 			</Drawer>
 		</React.Fragment>

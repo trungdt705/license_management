@@ -1,57 +1,314 @@
-import { Typography, Grid, Paper, makeStyles } from '@material-ui/core';
-import React from 'react';
+import {
+	Typography,
+	Grid,
+	Paper,
+	makeStyles,
+	CssBaseline,
+	Grow,
+} from "@material-ui/core";
+import {
+	Visibility as VisibilityIcon,
+	VerifiedUser as VerifiedUserIcon,
+	Error as ErrorIcon,
+	AccessAlarm as AccessAlarmIcon,
+} from "@material-ui/icons";
+import React from "react";
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: 'left',
+		textAlign: "left",
 		color: theme.palette.text.secondary,
-		borderRadius: 20
+		borderRadius: 10,
+		position: "relative",
 	},
 	title: {
-		marginBottom: theme.spacing(3)
-	}
+		marginBottom: theme.spacing(3),
+	},
+	detail: {
+		marginLeft: 10,
+	},
+	watermark: {
+		alignItems: "center",
+		display: "flex",
+		justifyContent: "center",
+		position: "absolute",
+		top: "20%",
+		right: "1%",
+		width: "100%",
+	},
+	watermarkContentVerified: {
+		color: "rgba(60, 179, 113, 0.5)",
+		fontSize: "3rem",
+		fontWeight: "bold",
+		userSelect: "none",
+	},
+	watermarkContentBlock: {
+		color: "rgba(0, 0, 0, 0.5)",
+		fontSize: "3rem",
+		fontWeight: "bold",
+		userSelect: "none",
+	},
+	watermarkContentPending: {
+		color: "rgb(255, 0, 0, 0.5)",
+		fontSize: "3rem",
+		fontWeight: "bold",
+		userSelect: "none",
+	},
 }));
 
 const LicenseManagement = () => {
 	const classes = useStyles();
 	return (
 		<React.Fragment>
-			<Grid container spacing={3}>
-				<Typography variant="h4">License management</Typography>
+			<CssBaseline />
+			<Grid container spacing={2}>
 				<Grid item xs={12} lg={4}>
-					<Paper className={classes.paper}>
-						<Grid container>
-							<Grid item xs={12}>
-								<Typography variant="caption">
-									<Typography component="span">
-										Organization
+					<Grow in={true}>
+						<Paper className={classes.paper}>
+							<div className={classes.watermark}>
+								<div
+									className={classes.watermarkContentVerified}
+								>
+									<VerifiedUserIcon
+										style={{ fontSize: "5rem" }}
+									/>
+								</div>
+							</div>
+							<Grid container>
+								<Grid item sm={5} xs={12}>
+									<Typography variant="subtitle2">
+										Organization:
 									</Typography>
-									<Typography
-										variant="subtitle2"
-										component="span"
-									>
+								</Grid>
+								<Grid item sm={7} xs={12}>
+									<Typography variant="subtitle2">
 										trung.dt1@cmctelecom.vn
 									</Typography>
-								</Typography>
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<Typography variant="caption">
-									<Typography component="span">
-										Organization
+							<Grid container>
+								<Grid sm={5} xs={5}>
+									<Typography variant="subtitle2">
+										Start date:
 									</Typography>
-									<Typography
-										variant="subtitle2"
-										component="span"
-									>
-										trung.dt1@cmctelecom.vn
+								</Grid>
+								<Grid item xs={6}>
+									<Typography variant="subtitle2">
+										01/01/2021
 									</Typography>
-								</Typography>
+								</Grid>
 							</Grid>
-						</Grid>
-					</Paper>
+							<Grid container>
+								<Grid sm={5} xs={5}>
+									<Typography variant="subtitle2">
+										End Date:
+									</Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography variant="subtitle2">
+										21/12/2021 (1 year)
+									</Typography>
+								</Grid>
+							</Grid>
+							<Grid container>
+								<Grid sm={5} xs={5}>
+									<Typography variant="subtitle2">
+										Remain/Limit:
+									</Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Typography variant="subtitle2">
+										80/100
+									</Typography>
+								</Grid>
+							</Grid>
+							<Typography variant="caption">
+								<Grid container>
+									<Grid item xs={10}>
+										<Typography>
+											LICENSE KEY: ********
+										</Typography>
+									</Grid>
+									<Grid item xs={2}>
+										<VisibilityIcon />
+									</Grid>
+								</Grid>
+							</Typography>
+						</Paper>
+					</Grow>
+				</Grid>
+				<Grid item xs={12} lg={4}>
+					<Grow in={true}>
+						<Paper className={classes.paper}>
+							<div className={classes.watermark}>
+								<div className={classes.watermarkContentBlock}>
+									<ErrorIcon style={{ fontSize: "5rem" }} />
+								</div>
+							</div>
+							<Grid container>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid item sm={5} xs={12}>
+											<Typography variant="subtitle2">
+												Organization:
+											</Typography>
+										</Grid>
+										<Grid item sm={7} xs={12}>
+											<Typography variant="subtitle2">
+												trung.dt1@cmctelecom.vn
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												Start date:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												01/01/2021
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												End Date:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												21/12/2021 (1 year)
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												Remain/Limit:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												80/100
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Typography variant="caption">
+										<Grid container>
+											<Grid item xs={10}>
+												<Typography>
+													LICENSE KEY: ********
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<VisibilityIcon />
+											</Grid>
+										</Grid>
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
+					</Grow>
+				</Grid>
+				<Grid item xs={12} lg={4}>
+					<Grow in={true}>
+						<Paper className={classes.paper}>
+							<div className={classes.watermark}>
+								<div
+									className={classes.watermarkContentPending}
+								>
+									<AccessAlarmIcon
+										style={{ fontSize: "5rem" }}
+									/>
+								</div>
+							</div>
+							<Grid container>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid item sm={5} xs={12}>
+											<Typography variant="subtitle2">
+												Organization:
+											</Typography>
+										</Grid>
+										<Grid item sm={7} xs={12}>
+											<Typography variant="subtitle2">
+												trung.dt1@cmctelecom.vn
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												Start date:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												01/01/2021
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												End Date:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												21/12/2021 (1 year)
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container>
+										<Grid sm={5} xs={5}>
+											<Typography variant="subtitle2">
+												Remain/Limit:
+											</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Typography variant="subtitle2">
+												80/100
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
+									<Typography variant="caption">
+										<Grid container>
+											<Grid item xs={10}>
+												<Typography>
+													LICENSE KEY: ********
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<VisibilityIcon />
+											</Grid>
+										</Grid>
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
+					</Grow>
 				</Grid>
 			</Grid>
 		</React.Fragment>
