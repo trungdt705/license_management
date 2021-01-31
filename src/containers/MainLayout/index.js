@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		flexGrow: 1,
 		// padding: theme.spacing(2, 1, 2, 1),
-		marginBottom: 60,
 	},
 	footer: {
 		position: "fixed",
@@ -97,20 +96,20 @@ export default function MainLayout(props) {
 		<div className={classes.root}>
 			<CustomAppBar open={open} onHandleDrawerOpen={handleDrawerOpen} />
 			{/* <CustomDrawer open={open} onHandleDrawerClose={handleDrawerClose} /> */}
-			<Container style={{ marginTop: 20 }}>
+			<Container style={{ marginTop: 20, marginBottom: 100 }}>
 				<main className={classes.content}>
 					<div className={classes.toolbar}></div>
 					<ContentComponent />
 				</main>
-				<div className={classes.footer}>
-					<Typography variant="subtitle1">
-						license management - copyright &#169; 2021
-					</Typography>
-					<Typography variant="subtitle1">
-						Support: 0977.459.333
-					</Typography>
-				</div>
 			</Container>
+			<div className={classes.footer}>
+				<Typography variant="subtitle1">
+					license management - copyright &#169; 2021
+				</Typography>
+				<Typography variant="subtitle1">
+					Support: 0977.459.333
+				</Typography>
+			</div>
 		</div>
 	);
 }
