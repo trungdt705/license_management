@@ -1,49 +1,51 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import * as Types from '../../store/Application/Types';
-import { pink } from '@material-ui/core/colors';
-import { Grid, Paper, Typography, Avatar, Button } from '@material-ui/core';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import * as Types from "../../store/Application/Types";
+import { pink } from "@material-ui/core/colors";
+import { Grid, Paper, Typography, Avatar, Button } from "@material-ui/core";
 import {
 	Pageview as PageviewIcon,
 	Add as AddIcon,
-	DeleteForever as DeleteForeverIcon
-} from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
+	DeleteForever as DeleteForeverIcon,
+} from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	paper: {
 		padding: theme.spacing(1),
-		color: theme.palette.text.secondary
+		color: theme.palette.text.secondary,
 		// backgroundColor: theme.palette.text.secondary
 	},
 	leftContent: {
-		textAlign: 'left'
+		textAlign: "left",
 	},
 	rightContent: {
-		textAlign: 'right'
+		textAlign: "right",
 	},
 	pink: {
 		color: theme.palette.getContrastText(pink[500]),
-		backgroundColor: pink[500]
+		backgroundColor: pink[500],
+		width: theme.spacing(4),
+		height: theme.spacing(4),
 	},
 	equalContent: {
-		alignItems: 'center'
+		alignItems: "center",
 	},
 	button: {
-		margin: theme.spacing(1)
+		margin: theme.spacing(1),
 	},
 	deleteIcon: {
-		color: 'red',
+		color: "red",
 		opacity: 0.5,
-		cursor: 'pointer',
-		'&:hover': {
-			opacity: 1
-		}
-	}
+		cursor: "pointer",
+		"&:hover": {
+			opacity: 1,
+		},
+	},
 }));
 
 export default function FolderList() {
@@ -55,48 +57,27 @@ export default function FolderList() {
 	}, []);
 
 	const applicationInfoPage = () => {
-		history.push('/applications/123');
+		history.push("/applications/123");
 	};
 
 	return (
-		<div className={classes.root}>
-			<Grid container className={classes.equalContent}>
-				<Grid item xs={10}>
-					<Typography variant="h4">Application</Typography>
-				</Grid>
-			</Grid>
-
-			<Grid container spacing={2}>
-				<Grid container justify="flex-end">
-					<Button
-						variant="outlined"
-						color="secondary"
-						className={classes.button}
-						startIcon={<AddIcon />}
-					>
-						add
-					</Button>
-				</Grid>
-				<Grid item xs={12} className={classes.content}>
+		<React.Fragment>
+			<Grid container spacing={3}>
+				<Grid item xs={12} lg={4} onClick={applicationInfoPage}>
 					<Paper className={classes.paper}>
 						<Grid
 							container
-							className={classes.equalContent}
-							onClick={applicationInfoPage}
+							style={{ display: "flex", alignItems: "center" }}
 						>
-							<Grid
-								item
-								xs={2}
-								justify="flex-end"
-								className={classes.leftContent}
-							>
+							<Grid item lg={2} xs={2}>
 								<Avatar className={classes.pink}>
-									<PageviewIcon />
+									<PageviewIcon fontSize="small" />
 								</Avatar>
 							</Grid>
 							<Grid
 								item
 								xs={8}
+								lg={8}
 								justify="flex-end"
 								className={classes.leftContent}
 							>
@@ -110,49 +91,7 @@ export default function FolderList() {
 							<Grid
 								item
 								xs={2}
-								justify="flex-end"
-								className={classes.rightContent}
-							>
-								<DeleteForeverIcon
-									className={classes.deleteIcon}
-								/>
-							</Grid>
-						</Grid>
-					</Paper>
-				</Grid>
-				<Grid item xs={12} className={classes.content}>
-					<Paper className={classes.paper}>
-						<Grid
-							container
-							className={classes.equalContent}
-							onClick={applicationInfoPage}
-						>
-							<Grid
-								item
-								xs={2}
-								justify="flex-end"
-								className={classes.leftContent}
-							>
-								<Avatar className={classes.pink}>
-									<PageviewIcon />
-								</Avatar>
-							</Grid>
-							<Grid
-								item
-								xs={8}
-								justify="flex-end"
-								className={classes.leftContent}
-							>
-								<Typography variant="h6">
-									Tên phần mềm
-								</Typography>
-								<Typography variant="caption">
-									Published: 01/01/2021
-								</Typography>
-							</Grid>
-							<Grid
-								item
-								xs={2}
+								lg={2}
 								justify="flex-end"
 								className={classes.rightContent}
 							>
@@ -164,6 +103,6 @@ export default function FolderList() {
 					</Paper>
 				</Grid>
 			</Grid>
-		</div>
+		</React.Fragment>
 	);
 }
