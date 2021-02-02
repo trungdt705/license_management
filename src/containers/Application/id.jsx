@@ -7,24 +7,24 @@ import {
 	ListItemSecondaryAction,
 	makeStyles,
 	ListItemIcon,
-	Divider,
-} from "@material-ui/core";
+	Divider
+} from '@material-ui/core';
 import {
 	Delete as DeleteIcon,
 	Done as DoneIcon,
 	VerifiedUser,
-	Add as AddIcon,
-} from "@material-ui/icons";
-import TabPanel from "../../components/Tab/TabPanel";
-import ApplicationTab from "../../components/Tab/AntTab";
-import React from "react";
+	Add as AddIcon
+} from '@material-ui/icons';
+import TabPanel from '../../components/Tab/TabPanel';
+import ApplicationTab from '../../components/Tab/AntTab';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	iconLarge: {
 		width: theme.spacing(3),
 		height: theme.spacing(3),
-		color: "green",
-	},
+		color: 'green'
+	}
 }));
 
 const ApplicationInfo = () => {
@@ -34,7 +34,12 @@ const ApplicationInfo = () => {
 			<Typography variant="h4">
 				Tên phần mềm <VerifiedUser className={classes.iconLarge} />
 			</Typography>
-			<Typography variant="caption" style={{ marginBottom: "5%" }}>
+			<Typography
+				variant="subtitle2"
+				component="div"
+				align="right"
+				style={{ marginBottom: 10, marginTop: 10 }}
+			>
 				Publish at: 01/01/2021
 			</Typography>
 			<ApplicationTab />

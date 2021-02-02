@@ -5,33 +5,32 @@ import {
 	Grid,
 	Paper,
 	makeStyles,
-	Grow,
-} from "@material-ui/core";
+	Grow
+} from '@material-ui/core';
 import {
 	Apps as AppsIcon,
 	ViewModule as ViewModuleIcon,
 	VpnKey as VpnKeyIcon,
-	SettingsApplications as SettingsApplicationsIcon,
-} from "@material-ui/icons";
-import React from "react";
+	SettingsApplications as SettingsApplicationsIcon
+} from '@material-ui/icons';
+import React from 'react';
 // import messages from './../../assets/Local/messages';
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { MENU as menu } from "../../utils/contants/home";
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { MENU as menu } from '../../utils/contants/home';
 // import { actionRequest } from '../../store/Feature1/FeatureAction';
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: "center",
-		color: theme.palette.text.secondary,
-		borderRadius: 20,
+		textAlign: 'center',
+		color: theme.palette.text.secondary
 	},
 	removeLinkLine: {
-		textDecoration: "none",
-	},
+		textDecoration: 'none'
+	}
 }));
 
 const Home = () => {

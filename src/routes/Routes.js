@@ -9,6 +9,7 @@ import Home from '../containers/Home/Home';
 import ApplicationInfo from '../containers/Application/id';
 import Setting from '../containers/Setting/Setting';
 import LicenseManagement from '../containers/License/License';
+import Packages from '../containers/Modules';
 
 const Routes = (props) => {
 	return (
@@ -31,6 +32,13 @@ const Routes = (props) => {
 						}}
 					/>
 					<Route
+						path="/packages"
+						exact
+						render={(props) => {
+							return <MainLayout component={Packages} />;
+						}}
+					/>
+					<Route
 						path="/setting"
 						exact
 						render={(props) => {
@@ -41,7 +49,6 @@ const Routes = (props) => {
 						path="/license-management"
 						exact
 						render={(props) => {
-							console.log('123');
 							return <MainLayout component={LicenseManagement} />;
 						}}
 					/>
