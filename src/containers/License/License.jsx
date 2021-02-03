@@ -12,6 +12,7 @@ import {
 	Error as ErrorIcon,
 	AccessAlarm as AccessAlarmIcon
 } from '@material-ui/icons';
+import CustomDialog from '../../components/Dialog';
 import React from 'react';
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -61,11 +62,19 @@ const useStyles = makeStyles((theme) => ({
 
 const LicenseManagement = () => {
 	const classes = useStyles();
+	const [open, setOpen] = React.useState(false);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<Grid container spacing={2}>
-				<Grid item xs={12} lg={4}>
+				<Grid item xs={12} lg={4} onClick={handleClickOpen}>
 					<Grow in={true}>
 						<Paper className={classes.paper}>
 							<div className={classes.watermark}>
@@ -311,6 +320,7 @@ const LicenseManagement = () => {
 					</Grow>
 				</Grid>
 			</Grid>
+			<CustomDialog open={open} onHandleClose={handleClose} />
 		</React.Fragment>
 	);
 };

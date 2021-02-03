@@ -79,12 +79,65 @@ export default function LicenseTypes() {
 
 	return (
 		<React.Fragment>
-			<Grid container spacing={3}>
-				<Grid item xs={12} lg={4} onClick={applicationInfoPage}>
-					<Paper className={classes.paper} elevation={1}>
+			<Grid container spacing={2} style={{ marginTop: 4 }}>
+				<Grid item xs={12} lg={4} md={4} onClick={applicationInfoPage}>
+					<Paper className={classes.paper} variant="outlined">
 						<Grid
 							container
-							style={{ display: 'flex', alignItems: 'center' }}
+							style={{
+								display: 'flex',
+								alignItems: 'center'
+							}}
+						>
+							<Grid
+								item
+								xs={10}
+								lg={10}
+								justify="flex-end"
+								className={classes.leftContent}
+							>
+								<Typography variant="h6">DEMO</Typography>
+								<Typography variant="caption">
+									Published: 01/01/2021
+								</Typography>
+								<Typography>
+									<StyledBadge
+										badgeContent={4}
+										color="secondary"
+										style={{ marginRight: 20 }}
+									>
+										<AppsIcon />
+									</StyledBadge>
+									<StyledBadge
+										badgeContent={4}
+										color="primary"
+									>
+										<AppsIcon />
+									</StyledBadge>
+								</Typography>
+							</Grid>
+							<Grid
+								item
+								xs={2}
+								lg={2}
+								justify="flex-end"
+								className={classes.rightContent}
+							>
+								<DeleteForeverIcon
+									className={classes.deleteIcon}
+								/>
+							</Grid>
+						</Grid>
+					</Paper>
+				</Grid>
+				<Grid item xs={12} lg={4} md={4} onClick={applicationInfoPage}>
+					<Paper className={classes.paper} variant="outlined">
+						<Grid
+							container
+							style={{
+								display: 'flex',
+								alignItems: 'center'
+							}}
 						>
 							<Grid
 								item
