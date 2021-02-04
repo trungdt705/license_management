@@ -1,44 +1,29 @@
-import {
-	Grid,
-	Typography,
-	List,
-	ListItem,
-	ListItemText,
-	ListItemSecondaryAction,
-	makeStyles,
-	ListItemIcon,
-	Divider
-} from '@material-ui/core';
-import {
-	Delete as DeleteIcon,
-	Done as DoneIcon,
-	VerifiedUser,
-	Add as AddIcon
-} from '@material-ui/icons';
-import TabPanel from '../../components/Tab/TabPanel';
-import ApplicationTab from '../../components/Tab/AntTab';
-import React from 'react';
+import { Typography, makeStyles, useTheme } from "@material-ui/core";
+import { VerifiedUser } from "@material-ui/icons";
+import ApplicationTab from "../../components/Tab/CustomTab";
+import LargeIcon from "../../components/Icon/LargeIcon";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
-	iconLarge: {
-		width: theme.spacing(3),
-		height: theme.spacing(3),
-		color: 'green'
-	}
+	publish: {
+		marginBottom: 10,
+		marginTop: 10,
+	},
 }));
 
 const ApplicationInfo = () => {
 	const classes = useStyles();
+	const theme = useTheme();
 	return (
 		<React.Fragment>
 			<Typography variant="h4">
-				Tên phần mềm <VerifiedUser className={classes.iconLarge} />
+				Tên phần mềm <LargeIcon component={VerifiedUser} />
 			</Typography>
 			<Typography
 				variant="subtitle2"
 				component="div"
 				align="right"
-				style={{ marginBottom: 10, marginTop: 10 }}
+				className={classes.publish}
 			>
 				Publish at: 01/01/2021
 			</Typography>

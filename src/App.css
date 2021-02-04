@@ -75,3 +75,8 @@
 			0 0 200px var(--shadow-color);
 	}
 }
+
+.center-card {
+	display: flex;
+	align-items: center;
+}

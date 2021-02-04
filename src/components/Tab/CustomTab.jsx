@@ -1,66 +1,54 @@
-import React from 'react';
+import React from "react";
 import {
 	withStyles,
 	Tab,
 	Tabs,
 	Typography,
-	makeStyles
-} from '@material-ui/core';
-import TabPanel from './TabPanel';
-import Features from '../Application/Features';
-import Modules from '../Application/Modules';
-import LicenseTypes from '../Application/LicenseType';
-const AntTabs = withStyles({
+	makeStyles,
+} from "@material-ui/core";
+import TabPanel from "./TabPanel";
+import Features from "../Application/Features";
+import Modules from "../Application/Modules";
+import LicenseTypes from "../Application/LicenseType";
+const CustomTab = withStyles((theme) => ({
 	root: {
-		borderBottom: '1px solid #e8e8e8'
+		borderBottom: "1px solid #e8e8e8",
 	},
 	indicator: {
-		backgroundColor: '#1890ff'
-	}
-})(Tabs);
+		backgroundColor: theme.palette.secondary.main,
+	},
+}))(Tabs);
 
 const AntTab = withStyles((theme) => ({
 	root: {
-		textTransform: 'none',
+		textTransform: "none",
 		minWidth: 72,
 		fontWeight: theme.typography.fontWeightRegular,
 		marginRight: theme.spacing(1),
-		fontFamily: [
-			'-apple-system',
-			'BlinkMacSystemFont',
-			'"Segoe UI"',
-			'Roboto',
-			'"Helvetica Neue"',
-			'Arial',
-			'sans-serif',
-			'"Apple Color Emoji"',
-			'"Segoe UI Emoji"',
-			'"Segoe UI Symbol"'
-		].join(','),
-		'&:hover': {
-			color: '#40a9ff',
-			opacity: 1
+		"&:hover": {
+			color: theme.palette.secondary.main,
+			opacity: 1,
 		},
-		'&$selected': {
-			color: '#1890ff',
-			fontWeight: theme.typography.fontWeightMedium
+		"&$selected": {
+			color: theme.palette.secondary.main,
+			fontWeight: theme.typography.fontWeightMedium,
 		},
-		'&:focus': {
-			color: '#40a9ff'
-		}
+		"&:focus": {
+			color: theme.palette.secondary.main,
+		},
 	},
-	selected: {}
+	selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
 function a11yProps(index) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
-		'aria-controls': `scrollable-auto-tabpanel-${index}`
+		"aria-controls": `scrollable-auto-tabpanel-${index}`,
 	};
 }
 
 const useStyles = makeStyles((theme) => ({
-	demo: { backgroundColor: theme.palette.background.paper }
+	demo: { backgroundColor: theme.palette.background.paper },
 }));
 
 const ApplicationTab = (props) => {
@@ -71,7 +59,7 @@ const ApplicationTab = (props) => {
 	};
 	return (
 		<div className={classes.demo}>
-			<AntTabs
+			<CustomTab
 				value={value}
 				onChange={handleChange}
 				aria-label="ant example"
@@ -79,7 +67,7 @@ const ApplicationTab = (props) => {
 				<AntTab label="Features" {...a11yProps(0)} />
 				<AntTab label="Modules" {...a11yProps(1)} />
 				<AntTab label="License type" {...a11yProps(2)} />
-			</AntTabs>
+			</CustomTab>
 			<TabPanel index={0} value={value}>
 				<Features />
 			</TabPanel>

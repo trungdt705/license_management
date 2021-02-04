@@ -1,39 +1,31 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
 	Typography,
 	Grid,
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
-	IconButton
-} from '@material-ui/core';
-import {
-	ExpandMore as ExpandMoreIcon,
-	Delete as DeleteIcon,
-	Check
-} from '@material-ui/icons/';
+} from "@material-ui/core";
+import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons/";
+import Features from "./Features";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: '100%'
+		width: "100%",
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
-		flexBasis: '33.33%',
-		flexShrink: 0
+		flexBasis: "33.33%",
+		flexShrink: 0,
 	},
 	secondaryHeading: {
 		fontSize: theme.typography.pxToRem(15),
-		color: theme.palette.text.secondary
+		color: theme.palette.text.secondary,
 	},
-	equalContent: {
-		display: 'flex',
-		alignItems: 'center'
-	}
 }));
 
-export default function ControlledAccordions() {
+export default function ApplicationModules() {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
 
@@ -44,8 +36,8 @@ export default function ControlledAccordions() {
 	return (
 		<div className={classes.root}>
 			<Accordion
-				expanded={expanded === 'panel1'}
-				onChange={handleChange('panel1')}
+				expanded={expanded === "panel1"}
+				onChange={handleChange("panel1")}
 				elevation={0}
 			>
 				<AccordionSummary
@@ -61,25 +53,14 @@ export default function ControlledAccordions() {
 					</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					<Grid container className={classes.equalContent}>
-						<Grid item xs={2}>
-							<Check />
-						</Grid>
-						<Grid item xs={8}>
-							Feature 1
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton aria-label="delete">
-								{' '}
-								<DeleteIcon />
-							</IconButton>
-						</Grid>
+					<Grid container>
+						<Features />
 					</Grid>
 				</AccordionDetails>
 			</Accordion>
 			<Accordion
-				expanded={expanded === 'panel2'}
-				onChange={handleChange('panel2')}
+				expanded={expanded === "panel2"}
+				onChange={handleChange("panel2")}
 				elevation={0}
 			>
 				<AccordionSummary
@@ -95,37 +76,9 @@ export default function ControlledAccordions() {
 					</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					<Typography>
-						Donec placerat, lectus sed mattis semper, neque lectus
-						feugiat lectus, varius pulvinar diam eros in elit.
-						Pellentesque convallis laoreet laoreet.
-					</Typography>
-				</AccordionDetails>
-			</Accordion>
-			<Accordion
-				expanded={expanded === 'panel3'}
-				onChange={handleChange('panel3')}
-				elevation={0}
-			>
-				<AccordionSummary
-					expandIcon={<ExpandMoreIcon />}
-					aria-controls="panel3bh-content"
-					id="panel3bh-header"
-				>
-					<Typography className={classes.heading}>
-						Module 3
-					</Typography>
-					<Typography className={classes.secondaryHeading}>
-						Filtering has been entirely disabled for whole web
-						server
-					</Typography>
-				</AccordionSummary>
-				<AccordionDetails>
-					<Typography>
-						Nunc vitae orci ultricies, auctor nunc in, volutpat
-						nisl. Integer sit amet egestas eros, vitae egestas
-						augue. Duis vel est augue.
-					</Typography>
+					<Grid container>
+						<Features />
+					</Grid>
 				</AccordionDetails>
 			</Accordion>
 		</div>
