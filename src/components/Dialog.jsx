@@ -9,21 +9,16 @@ import {
 	IconButton,
 	useMediaQuery,
 	Typography,
-	Grid,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemSecondaryAction,
-	ListItemText,
-	Paper,
-	Switch,
 	makeStyles
 } from '@material-ui/core/';
-import { Close as CloseIcon, Wifi, Wifi as WifiIcon } from '@material-ui/icons';
+import { Close as CloseIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	inline: {
 		display: 'inline'
+	},
+	hide: {
+		display: 'none'
 	}
 }));
 const styles = (theme) => ({
@@ -71,25 +66,16 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default function CustomizedDialogs(props) {
+	const {
+		showAction = false,
+		title = 'List User',
+		content: ComponentContent
+	} = props;
 	const theme = useTheme();
 	const classes = useStyles();
 	const [fullWidth, setFullWidth] = React.useState(true);
 	const [maxWidth, setMaxWidth] = React.useState('sm');
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-	const [checked, setChecked] = React.useState(['wifi']);
-
-	const handleToggle = (value) => () => {
-		const currentIndex = checked.indexOf(value);
-		const newChecked = [...checked];
-
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
-
-		setChecked(newChecked);
-	};
 	return (
 		<div>
 			<Dialog
@@ -104,41 +90,12 @@ export default function CustomizedDialogs(props) {
 					id="customized-dialog-title"
 					onClose={props.onHandleClose}
 				>
-					List User
+					{title}
 				</DialogTitle>
 				<DialogContent dividers>
-					<List>
-						<ListItem>
-							<ListItemText
-								id="switch-list-label-wifi"
-								primary={
-									<React.Fragment>
-										<Typography
-											variant="subtitle2"
-											color="textPrimary"
-											display="inline"
-										>
-											dinhthanhtrung7051992@gmai .com
-											fffff
-										</Typography>
-									</React.Fragment>
-								}
-							/>
-							<ListItemSecondaryAction>
-								<Switch
-									edge="end"
-									onChange={handleToggle('wifi')}
-									checked={checked.indexOf('wifi') !== -1}
-									inputProps={{
-										'aria-labelledby':
-											'switch-list-label-wifi'
-									}}
-								/>
-							</ListItemSecondaryAction>
-						</ListItem>
-					</List>
+					<ComponentContent config={props.dataConfig} />
 				</DialogContent>
-				{/* <DialogActions>
+				<DialogActions className={showAction ? '' : classes.hide}>
 					<Button
 						autoFocus
 						onClick={props.onHandleClose}
@@ -146,7 +103,7 @@ export default function CustomizedDialogs(props) {
 					>
 						Save changes
 					</Button>
-				</DialogActions> */}
+				</DialogActions>
 			</Dialog>
 		</div>
 	);

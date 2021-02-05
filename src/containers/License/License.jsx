@@ -5,27 +5,32 @@ import {
 	makeStyles,
 	CssBaseline,
 	Grow,
-} from "@material-ui/core";
+	List,
+	ListItem,
+	ListItemText,
+	ListItemSecondaryAction,
+	Switch
+} from '@material-ui/core';
 import {
 	Visibility as VisibilityIcon,
 	VerifiedUser as VerifiedUserIcon,
 	Error as ErrorIcon,
-	AccessAlarm as AccessAlarmIcon,
-} from "@material-ui/icons";
-import CustomDialog from "../../components/Dialog";
-import React from "react";
+	AccessAlarm as AccessAlarmIcon
+} from '@material-ui/icons';
+import CustomDialog from '../../components/Dialog';
+import React from 'react';
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: "left",
+		textAlign: 'left',
 		color: theme.palette.text.secondary,
 		borderRadius: 10,
-		position: "relative",
-		borderLeft: `10px solid ${theme.palette.error.main}`,
-	},
+		position: 'relative',
+		borderLeft: `10px solid ${theme.palette.error.main}`
+	}
 	// watermark: {
 	// 	alignItems: "center",
 	// 	display: "flex",
@@ -54,6 +59,52 @@ const useStyles = makeStyles((theme) => ({
 	// 	userSelect: "none",
 	// },
 }));
+
+const ListUser = () => {
+	const [checked, setChecked] = React.useState(['wifi']);
+	const handleToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [...checked];
+
+		if (currentIndex === -1) {
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
+
+		setChecked(newChecked);
+	};
+	return (
+		<List>
+			<ListItem>
+				<ListItemText
+					id="switch-list-label-wifi"
+					primary={
+						<React.Fragment>
+							<Typography
+								variant="subtitle2"
+								color="textPrimary"
+								display="inline"
+							>
+								dinhthanhtrung7051992@gmai .com fffff
+							</Typography>
+						</React.Fragment>
+					}
+				/>
+				<ListItemSecondaryAction>
+					<Switch
+						edge="end"
+						onChange={handleToggle('wifi')}
+						checked={checked.indexOf('wifi') !== -1}
+						inputProps={{
+							'aria-labelledby': 'switch-list-label-wifi'
+						}}
+					/>
+				</ListItemSecondaryAction>
+			</ListItem>
+		</List>
+	);
+};
 
 const LicenseManagement = () => {
 	const classes = useStyles();
@@ -145,7 +196,12 @@ const LicenseManagement = () => {
 					</Grow>
 				</Grid>
 			</Grid>
-			<CustomDialog open={open} onHandleClose={handleClose} />
+			<CustomDialog
+				open={open}
+				onHandleClose={handleClose}
+				title={'List User'}
+				content={ListUser}
+			/>
 		</React.Fragment>
 	);
 };

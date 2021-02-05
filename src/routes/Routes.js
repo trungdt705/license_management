@@ -10,6 +10,7 @@ import ApplicationInfo from '../containers/Application/id';
 import Setting from '../containers/Setting/Setting';
 import LicenseManagement from '../containers/License/License';
 import Packages from '../containers/Modules';
+import Upsert from '../components/Upsert';
 
 const Routes = (props) => {
 	return (
@@ -29,6 +30,43 @@ const Routes = (props) => {
 						exact
 						render={(props) => {
 							return <MainLayout component={Application} />;
+						}}
+					/>
+					<Route
+						path="/applications/action/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={{
+										title: 'Create Application',
+										attributes: {
+											name: {
+												label: 'Name',
+												type: 'TextField'
+											},
+											description: {
+												label: 'Description',
+												type: 'TextField'
+											},
+											publishAt: {
+												label: 'Publish At',
+												type: 'DateTime'
+											}
+										},
+										api: {
+											path: '/application',
+											method: 'POST'
+										},
+										actions: {
+											create: true,
+											edit: false,
+											cancel: true
+										}
+									}}
+								/>
+							);
 						}}
 					/>
 					<Route

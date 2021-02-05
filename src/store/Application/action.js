@@ -9,3 +9,11 @@ export const actionReceive = (payload) => ({
 	type: types.GET_LIST,
 	payload
 });
+
+export const actionCreate = (payload) => {
+	console.log(123);
+	return {
+		type: types.CREATE,
+		payload
+	};
+};

@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import * as Types from "../../store/Application/Types";
-import { pink } from "@material-ui/core/colors";
-import { Grid, Typography, Avatar } from "@material-ui/core";
-import { Apps as AppsIcon, Pageview as PageviewIcon } from "@material-ui/icons";
-import CommonCard from "../Card/CommonCard";
-import DeleteIconButton from "../Button/DeleteIconButton";
-import StyledBadge from "../../components/Badge/BadgeCustom";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import * as Types from '../../store/Application/Types';
+import { pink } from '@material-ui/core/colors';
+import { Grid, Typography, Avatar } from '@material-ui/core';
+import { Apps as AppsIcon, Pageview as PageviewIcon } from '@material-ui/icons';
+import CommonCard from '../Card/CommonCard';
+import DeleteIconButton from '../Button/DeleteIconButton';
+import StyledBadge from '../../components/Badge/BadgeCustom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		"& > *": {
-			margin: theme.spacing(1),
-		},
-	},
+		'& > *': {
+			margin: theme.spacing(1)
+		}
+	}
 }));
 
 const CardIcon = (props) => {

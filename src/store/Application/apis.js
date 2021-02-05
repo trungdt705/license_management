@@ -11,6 +11,17 @@ const getList = async () => {
 	});
 };
 
+const create = async (payload) => {
+	console.log('payload', payload);
+	return await axiosInstance.post(`applications/`, payload, {
+		handlerEnabled,
+		headers: {
+			'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+		}
+	});
+};
+
 export default {
-	getList
+	getList,
+	create
 };

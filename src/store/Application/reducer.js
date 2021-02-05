@@ -10,6 +10,11 @@ export default (state = INITIAL_STATE, action) => {
 				...state,
 				...action.payload
 			};
+		case types.CREATE:
+			return {
+				...state,
+				...action.payload
+			};
 		default:
 			return state;
 	}
