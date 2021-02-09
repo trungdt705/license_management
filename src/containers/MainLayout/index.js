@@ -1,88 +1,92 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import CustomAppBar from './AppBar';
-import CustomDrawer from './Drawer';
-import { Container, Grid, Typography } from '@material-ui/core';
-import Footer from './Footer';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import CustomAppBar from "./AppBar";
+import CustomDrawer from "./Drawer";
+import { Container, Grid, Typography } from "@material-ui/core";
+import Footer from "./Footer";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		display: 'flex'
+		display: "flex",
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
+		transition: theme.transitions.create(["width", "margin"], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
-		})
+			duration: theme.transitions.duration.leavingScreen,
+		}),
 	},
 	appBarShift: {
 		marginLeft: drawerWidth,
 		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
+		transition: theme.transitions.create(["width", "margin"], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	menuButton: {
-		marginRight: 36
+		marginRight: 36,
 	},
 	hide: {
-		display: 'none'
+		display: "none",
 	},
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
-		whiteSpace: 'nowrap'
+		whiteSpace: "nowrap",
 	},
 	drawerOpen: {
 		width: drawerWidth,
-		transition: theme.transitions.create('width', {
+		transition: theme.transitions.create("width", {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		})
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	drawerClose: {
-		transition: theme.transitions.create('width', {
+		transition: theme.transitions.create("width", {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
+			duration: theme.transitions.duration.leavingScreen,
 		}),
-		overflowX: 'hidden',
+		overflowX: "hidden",
 		width: theme.spacing(7) + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(9) + 1
-		}
+		[theme.breakpoints.up("sm")]: {
+			width: theme.spacing(9) + 1,
+		},
 	},
 	toolbar: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "flex-end",
 		padding: theme.spacing(0, 1),
 		// necessary for content to be below app bar
-		...theme.mixins.toolbar
+		...theme.mixins.toolbar,
 	},
 	content: {
-		flexGrow: 1
+		flexGrow: 1,
 		// padding: theme.spacing(2, 1, 2, 1),
 	},
 	footer: {
-		position: 'fixed',
+		position: "fixed",
 		left: 0,
 		bottom: 0,
-		width: '100%',
-		background: '#2e2a29',
-		color: 'white',
-		textAlign: 'center'
-	}
+		width: "100%",
+		background: "#2e2a29",
+		color: "white",
+		textAlign: "center",
+	},
 }));
 
 export default function MainLayout(props) {
 	const classes = useStyles();
 	const theme = useTheme();
+	const history = useHistory();
 	const [open, setOpen] = React.useState(false);
+	const title = useSelector((state) => state.TitleBar.title);
 	const { component: ContentComponent } = props;
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -92,9 +96,15 @@ export default function MainLayout(props) {
 		setOpen(false);
 	};
 
+	// useEffect(() => {}, [title]);
+
 	return (
 		<div className={classes.root}>
-			<CustomAppBar open={open} onHandleDrawerOpen={handleDrawerOpen} />
+			<CustomAppBar
+				open={open}
+				title={title}
+				onHandleDrawerOpen={handleDrawerOpen}
+			/>
 			{/* <CustomDrawer open={open} onHandleDrawerClose={handleDrawerClose} /> */}
 			<Container style={{ marginTop: 20, marginBottom: 100 }}>
 				<main className={classes.content}>

@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-// import rtl from 'jss-rtl';
-import { create } from "jss";
-import { StylesProvider, jssPreset } from "@material-ui/styles";
-import { useSelector } from "react-redux";
+import { StylesProvider, ThemeProvider } from "@material-ui/styles";
+import React, { useEffect } from "react";
 import App from "./containers/App";
 
 function ThemeApp() {

@@ -1,36 +1,40 @@
+import moment from "moment-timezone";
 import {
-	Typography,
-	Grid,
-	Paper,
-	makeStyles,
 	CssBaseline,
+	Grid,
 	Grow,
+	IconButton,
 	List,
 	ListItem,
-	ListItemText,
 	ListItemSecondaryAction,
-	Switch
-} from '@material-ui/core';
+	ListItemText,
+	makeStyles,
+	Paper,
+	Switch,
+	Typography,
+} from "@material-ui/core";
 import {
 	Visibility as VisibilityIcon,
-	VerifiedUser as VerifiedUserIcon,
-	Error as ErrorIcon,
-	AccessAlarm as AccessAlarmIcon
-} from '@material-ui/icons';
-import CustomDialog from '../../components/Dialog';
-import React from 'react';
+	VisibilityOff as VisibilityOffIcon,
+} from "@material-ui/icons";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CustomDialog from "../../components/Dialog";
+import * as Types from "../../store/sagas/commonType";
+import * as ActionTypes from "../../store/License/Types";
+
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: 'left',
+		textAlign: "left",
 		color: theme.palette.text.secondary,
 		borderRadius: 10,
-		position: 'relative',
-		borderLeft: `10px solid ${theme.palette.error.main}`
-	}
+		position: "relative",
+		borderLeft: `10px solid ${theme.palette.error.main}`,
+	},
 	// watermark: {
 	// 	alignItems: "center",
 	// 	display: "flex",
@@ -61,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListUser = () => {
-	const [checked, setChecked] = React.useState(['wifi']);
+	const [checked, setChecked] = React.useState(["wifi"]);
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -94,10 +98,10 @@ const ListUser = () => {
 				<ListItemSecondaryAction>
 					<Switch
 						edge="end"
-						onChange={handleToggle('wifi')}
-						checked={checked.indexOf('wifi') !== -1}
+						onChange={handleToggle("wifi")}
+						checked={checked.indexOf("wifi") !== -1}
 						inputProps={{
-							'aria-labelledby': 'switch-list-label-wifi'
+							"aria-labelledby": "switch-list-label-wifi",
 						}}
 					/>
 				</ListItemSecondaryAction>
@@ -109,21 +113,55 @@ const ListUser = () => {
 const LicenseManagement = () => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
+	const [id, setId] = React.useState("");
+	const [isShowLicense, setIsShowLicense] = React.useState(false);
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	const showLicense = (item) => (event) => {
+		event.stopPropagation();
+		setId(item.id);
+		setIsShowLicense(false);
+	};
+
+	const hideLicense = (item) => (event) => {
+		event.stopPropagation();
+		setId(item.id);
+		setIsShowLicense(true);
+	};
+
+	const licenses = useSelector((state) => state.License.data);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch({
+			type: Types.GET_LIST,
+			payload: {
+				action: ActionTypes.LICENSE_GET_LIST,
+				path: `licenses`,
+			},
+		});
+	}, []);
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<Grid container spacing={2}>
-				<Grid item xs={12} lg={4} onClick={handleClickOpen}>
-					<Grow in={true}>
-						<Paper className={classes.paper}>
-							{/* <div className={classes.watermark}>
+				{licenses.length > 0 &&
+					licenses.map((item) => {
+						return (
+							<Grid
+								item
+								xs={12}
+								lg={4}
+								onClick={handleClickOpen}
+								key={item.id}
+							>
+								<Grow in={true}>
+									<Paper className={classes.paper}>
+										{/* <div className={classes.watermark}>
 								<div
 									className={classes.watermarkContentVerified}
 								>
@@ -132,74 +170,98 @@ const LicenseManagement = () => {
 									/>
 								</div>
 							</div> */}
-							<Grid container>
-								<Grid item sm={5} xs={12}>
-									<Typography variant="subtitle2">
-										Organization:
-									</Typography>
-								</Grid>
-								<Grid item sm={7} xs={12}>
-									<Typography variant="subtitle2">
-										trung.dt1@cmctelecom.vn
-									</Typography>
-								</Grid>
-							</Grid>
-							<Grid container>
-								<Grid sm={5} xs={5}>
-									<Typography variant="subtitle2">
-										Start date:
-									</Typography>
-								</Grid>
-								<Grid item xs={6}>
-									<Typography variant="subtitle2">
-										01/01/2021
-									</Typography>
-								</Grid>
-							</Grid>
-							<Grid container>
-								<Grid sm={5} xs={5}>
-									<Typography variant="subtitle2">
-										End Date:
-									</Typography>
-								</Grid>
-								<Grid item xs={6}>
-									<Typography variant="subtitle2">
-										21/12/2021 (1 year)
-									</Typography>
-								</Grid>
-							</Grid>
-							<Grid container>
-								<Grid sm={5} xs={5}>
-									<Typography variant="subtitle2">
-										Remain/Limit:
-									</Typography>
-								</Grid>
-								<Grid item xs={6}>
-									<Typography variant="subtitle2">
-										80/100
-									</Typography>
-								</Grid>
-							</Grid>
-							<Typography variant="caption">
-								<Grid container>
-									<Grid item xs={10}>
-										<Typography>
-											LICENSE KEY: ********
+										<Grid container>
+											<Grid item sm={5} xs={12}>
+												<Typography variant="subtitle2">
+													Organization:
+												</Typography>
+											</Grid>
+											<Grid item sm={7} xs={12}>
+												<Typography variant="subtitle2">
+													{item.namespace}
+												</Typography>
+											</Grid>
+										</Grid>
+										<Grid container>
+											<Grid item sm={5} xs={5}>
+												<Typography variant="subtitle2">
+													Start date:
+												</Typography>
+											</Grid>
+											<Grid item xs={6}>
+												<Typography variant="subtitle2">
+													{moment(
+														item.start_date
+													).format("DD-MM-YYYY")}
+												</Typography>
+											</Grid>
+										</Grid>
+										<Grid container>
+											<Grid item sm={5} xs={5}>
+												<Typography variant="subtitle2">
+													End Date:
+												</Typography>
+											</Grid>
+											<Grid item xs={6}>
+												<Typography variant="subtitle2">
+													{moment(
+														item.end_date
+													).format("DD-MM-YYYY")}
+												</Typography>
+											</Grid>
+										</Grid>
+										<Grid container>
+											<Grid item sm={5} xs={5}>
+												<Typography variant="subtitle2">
+													Remain/Limit:
+												</Typography>
+											</Grid>
+											<Grid item xs={6}>
+												<Typography variant="subtitle2">
+													{item.activated_user}/
+													{item.user_limit}
+												</Typography>
+											</Grid>
+										</Grid>
+										<Typography variant="caption">
+											<Grid container>
+												<Grid item xs={11}>
+													<Typography variant="subtitle2">
+														LICENSE KEY:
+														{id === item.id &&
+														isShowLicense
+															? item.license
+															: "*********"}
+													</Typography>
+												</Grid>
+												<Grid item xs={1}>
+													{id == item.id &&
+													isShowLicense ? (
+														<VisibilityIcon
+															onClick={showLicense(
+																item
+															)}
+														/>
+													) : (
+														<VisibilityOffIcon
+															onClick={hideLicense(
+																item
+															)}
+														/>
+													)}
+												</Grid>
+											</Grid>
 										</Typography>
-									</Grid>
-									<Grid item xs={2}>
-										<VisibilityIcon />
-									</Grid>
-								</Grid>
-							</Typography>
-						</Paper>
-					</Grow>
-				</Grid>
+									</Paper>
+								</Grow>
+							</Grid>
+						);
+					})}
 			</Grid>
 			<CustomDialog
 				open={open}
 				onHandleClose={handleClose}
-				title={'List User'}
+				title={"List User"}
 				content={ListUser}
 			/>
 		</React.Fragment>

@@ -1,22 +1,51 @@
-import React from 'react';
-import { Grid, List, makeStyles } from '@material-ui/core';
-import AddButton from '../Button/AddButton';
-import ListItemHeader from '../ListItem/ListItemHeader';
-import ListItemContent from '../ListItem/ListItemContent';
+import { Grid, List } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddButton from "../Button/AddButton";
+import ListItemContent from "../ListItem/ListItemContent";
+import ListItemHeader from "../ListItem/ListItemHeader";
+import * as Types from "../../store/sagas/commonType";
+import * as ActionTypes from "../../store/Feature/Types";
+import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({}));
+// const useStyles = makeStyles((theme) => ({}));
 
-const Features = () => {
+const Features = (props) => {
+	console.log("Features", props);
 	const [dense] = React.useState(false);
+	const history = useHistory();
+	const features = useSelector((state) => state.Feature.data);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log("useEffect");
+		dispatch({
+			type: Types.GET_LIST,
+			payload: {
+				action: ActionTypes.FEATURE_GET_LIST,
+				path: `features?app=${props.appId}`,
+			},
+		});
+	}, []);
+	const addFeature = () => {
+		history.push("/features/action/create");
+	};
 	return (
 		<Grid container>
 			<Grid item xs={12} md={12}>
 				<List dense={dense}>
 					<ListItemHeader
-						component={AddButton}
-						content={'Total: 15'}
+						component={() => <AddButton action={addFeature} />}
+						content={"Total: 15"}
 					/>
-					<ListItemContent />
+					{features.length > 0 &&
+						features.map((item) => {
+							return (
+								<ListItemContent
+									text={item.name}
+									key={item.id}
+								/>
+							);
+						})}
 				</List>
 			</Grid>
 		</Grid>

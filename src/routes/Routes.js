@@ -1,16 +1,13 @@
-import React, { Suspense, useEffect } from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import * as LazyComponent from '../utils/LazyLoaded';
-import PrivateRoute from '../utils/PrivateRoute';
-import store from '../store';
-import MainLayout from '../containers/MainLayout';
-import Application from '../containers/Application/list';
-import Home from '../containers/Home/Home';
-import ApplicationInfo from '../containers/Application/id';
-import Setting from '../containers/Setting/Setting';
-import LicenseManagement from '../containers/License/License';
-import Packages from '../containers/Modules';
-import Upsert from '../components/Upsert';
+import React, { Suspense } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Upsert from "../components/Upsert";
+import ApplicationInfo from "../containers/Application/id";
+import Application from "../containers/Application/list";
+import Home from "../containers/Home/Home";
+import LicenseManagement from "../containers/License/License";
+import MainLayout from "../containers/MainLayout";
+import Packages from "../containers/Modules";
+import Setting from "../containers/Setting/Setting";
 
 const Routes = (props) => {
 	return (
@@ -26,13 +23,6 @@ const Routes = (props) => {
 						}}
 					/>
 					<Route
-						path="/applications"
-						exact
-						render={(props) => {
-							return <MainLayout component={Application} />;
-						}}
-					/>
-					<Route
 						path="/applications/action/create"
 						exact
 						render={(props) => {
@@ -40,30 +30,87 @@ const Routes = (props) => {
 								<MainLayout
 									component={Upsert}
 									dataConfig={{
-										title: 'Create Application',
+										title: "Create Application",
 										attributes: {
 											name: {
-												label: 'Name',
-												type: 'TextField'
+												label: "Name",
+												type: "TextField",
 											},
 											description: {
-												label: 'Description',
-												type: 'TextField'
+												label: "Description",
+												type: "TextField",
 											},
 											publishAt: {
-												label: 'Publish At',
-												type: 'DateTime'
-											}
+												label: "Publish At",
+												type: "DateTime",
+											},
 										},
+										sagaType: "CREATE",
+										actionType: "APPLICATION_CREATE",
 										api: {
-											path: '/application',
-											method: 'POST'
+											path: "/applications",
+											method: "POST",
 										},
 										actions: {
 											create: true,
 											edit: false,
-											cancel: true
-										}
+											cancel: true,
+										},
+									}}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/applications"
+						exact
+						render={(props) => {
+							return <MainLayout component={Application} />;
+						}}
+					/>
+					<Route
+						path="/features/action/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={{
+										title: "Create Features",
+										apiRef: [
+											{
+												saga: "GET_LIST",
+												action: "APPLICATION_GET_LIST",
+												path: "applications",
+												label: "Application",
+											},
+										],
+										attributes: {
+											name: {
+												label: "Name",
+												type: "TextField",
+											},
+											description: {
+												label: "Description",
+												type: "TextField",
+											},
+											app: {
+												label: "Application",
+												type: "Select",
+												apiRef: true,
+											},
+										},
+										sagaType: "CREATE",
+										actionType: "FEATURE_CREATE",
+										api: {
+											path: "features",
+											method: "POST",
+										},
+										actions: {
+											create: true,
+											edit: false,
+											cancel: true,
+										},
 									}}
 								/>
 							);

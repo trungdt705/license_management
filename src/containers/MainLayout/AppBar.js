@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +12,7 @@ import {
 	ArrowBack as ArrowBackIcon,
 	AccountCircle,
 } from "@material-ui/icons";
+import { getTitle } from "../../utils/helper";
 
 const drawerWidth = 240;
 
@@ -66,6 +68,12 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomAppBar = (props) => {
 	const classes = useStyles();
+	const history = useHistory();
+	console.log(history);
+	const goBack = () => {
+		if (history.location.pathname === "/") return;
+		history.goBack();
+	};
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
@@ -84,7 +92,11 @@ const CustomAppBar = (props) => {
 						color="inherit"
 						aria-label="open drawer"
 					>
-						<ArrowBackIcon />
+						{history.location.pathname !== "/" ? (
+							<ArrowBackIcon onClick={goBack} />
+						) : (
+							""
+						)}
 					</IconButton>
 					{/* <IconButton
 						color="inherit"
@@ -98,7 +110,9 @@ const CustomAppBar = (props) => {
 						<MenuIcon />
 					</IconButton> */}
 					<Typography variant="h6" noWrap className={classes.title}>
-						License Management
+						{history.location.pathname === "/"
+							? "License management"
+							: history.location.state.title}
 					</Typography>
 					<IconButton
 						edge="end"

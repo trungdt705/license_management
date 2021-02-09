@@ -1,12 +1,9 @@
-import * as React from "react";
+import { Typography } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import {
-	randomCreatedDate,
-	randomUpdatedDate,
-} from "@material-ui/x-grid-data-generator";
-import { Button, Typography, IconButton } from "@material-ui/core";
-import EditIconButton from "../../components/Button/EditIconButton";
+import { randomCreatedDate } from "@material-ui/x-grid-data-generator";
+import * as React from "react";
 import DeleteIconButton from "../../components/Button/DeleteIconButton";
+import EditIconButton from "../../components/Button/EditIconButton";
 
 const rows = [
 	{

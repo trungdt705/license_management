@@ -1,7 +1,7 @@
 import React from "react";
-import Routes from "../routes/Routes";
 import { IntlProvider } from "react-intl";
 import { connect } from "react-redux";
+import Routes from "../routes/Routes";
 class App extends React.Component {
 	render() {
 		const { lang, loading } = this.props;

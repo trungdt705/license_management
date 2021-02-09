@@ -9,34 +9,23 @@ import { CheckCircleOutline as CheckCircleOutlineIcon } from "@material-ui/icons
 import DeleteIconButton from "../Button/DeleteIconButton";
 import CustomsizeIcon from "../Icon/LargeIcon";
 
-function generate(element) {
-	return [0, 1, 2, 3, 4, 5, 6].map((value) =>
-		React.cloneElement(element, {
-			key: value,
-		})
-	);
-}
-
-const ListItemContent = () => {
+const ListItemContent = (props) => {
+	const { text } = props;
 	return (
-		<React.Fragment>
-			{generate(
-				<ListItem divider={true}>
-					<ListItemIcon>
-						<CustomsizeIcon component={CheckCircleOutlineIcon} />
-					</ListItemIcon>
-					<ListItemText
-						primary="Single-line item"
-						primaryTypographyProps={{
-							variant: "subtitle2",
-						}}
-					/>
-					<ListItemSecondaryAction>
-						<DeleteIconButton />
-					</ListItemSecondaryAction>
-				</ListItem>
-			)}
-		</React.Fragment>
+		<ListItem divider={true}>
+			<ListItemIcon>
+				<CustomsizeIcon component={CheckCircleOutlineIcon} />
+			</ListItemIcon>
+			<ListItemText
+				primary={text}
+				primaryTypographyProps={{
+					variant: "subtitle2",
+				}}
+			/>
+			<ListItemSecondaryAction>
+				<DeleteIconButton />
+			</ListItemSecondaryAction>
+		</ListItem>
 	);
 };
 

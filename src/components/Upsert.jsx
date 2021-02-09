@@ -1,55 +1,72 @@
 import {
-	Grid,
-	Typography,
-	makeStyles,
+	Button,
 	FormControl,
-	OutlinedInput,
+	Grid,
 	InputLabel,
-	Select,
+	makeStyles,
 	MenuItem,
-	Button
-} from '@material-ui/core';
-import {
-	Delete as DeleteIcon,
-	CloudUpload as CloudUploadIcon,
-	Send as SendIcon,
-	Edit as EditIcon
-} from '@material-ui/icons';
-import React, { Component } from 'react';
-import { useDispatch } from 'react-redux';
-import * as Types from '../store/Application/Types';
+	OutlinedInput,
+	Select,
+	Typography,
+} from "@material-ui/core";
+import { Delete as DeleteIcon, Send as SendIcon } from "@material-ui/icons";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		'& .MuiTextField-root': {
+		"& .MuiTextField-root": {
 			margin: theme.spacing(1),
-			width: '100%'
-		}
+			width: "100%",
+		},
 	},
 	isShow: {
-		display: 'none'
+		display: "none",
 	},
 	button: {
-		marginRight: theme.spacing(1)
-	}
+		marginRight: theme.spacing(1),
+	},
 }));
 
 const Upsert = (props) => {
+	console.log("Upsert");
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const [data, setData] = React.useState({});
+	const states = useSelector((state) => state);
 	const { type, dataConfig } = props;
 
 	const handleChange = (event) => {
 		setData((prevState) => ({
 			...prevState,
-			[event.target.name]: event.target.value
+			[event.target.name]: event.target.value,
 		}));
 	};
+
 	const call = () => {
-		console.log(data);
-		dispatch({ type: Types.CREATE, payload: data });
+		dispatch({
+			type: dataConfig.sagaType,
+			payload: {
+				action: dataConfig.actionType,
+				path: dataConfig.api.path,
+				data: data,
+			},
+		});
 	};
+
+	useEffect(() => {
+		if (dataConfig.apiRef && dataConfig.apiRef.length > 0) {
+			dataConfig.apiRef.forEach((item) => {
+				dispatch({
+					type: item.saga,
+					payload: {
+						action: item.action,
+						path: item.path,
+					},
+				});
+			});
+		}
+	}, []);
 	return (
 		<React.Fragment>
 			<Grid container spacing={2}>
@@ -63,8 +80,8 @@ const Upsert = (props) => {
 								variant="outlined"
 								className={
 									dataConfig.attributes[item].type ===
-									'TextField'
-										? ''
+									"TextField"
+										? ""
 										: classes.isShow
 								}
 								fullWidth
@@ -85,8 +102,8 @@ const Upsert = (props) => {
 								fullWidth
 								className={
 									dataConfig.attributes[item].type ===
-									'Select'
-										? ''
+									"Select"
+										? ""
 										: classes.isShow
 								}
 								fullWidth
@@ -105,9 +122,18 @@ const Upsert = (props) => {
 									<MenuItem value="">
 										<em>None</em>
 									</MenuItem>
-									<MenuItem value={10}>Ten</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
+									{states[
+										dataConfig.attributes[item].label
+									] &&
+										states[
+											dataConfig.attributes[item].label
+										].data.map((item) => {
+											return (
+												<MenuItem value={item.id}>
+													{item.name}
+												</MenuItem>
+											);
+										})}
 								</Select>
 							</FormControl>
 							<FormControl
@@ -115,8 +141,8 @@ const Upsert = (props) => {
 								fullWidth
 								className={
 									dataConfig.attributes[item].type ===
-									'DateTime'
-										? ''
+									"DateTime"
+										? ""
 										: classes.isShow
 								}
 								fullWidth
@@ -131,15 +157,13 @@ const Upsert = (props) => {
 									label="Next appointment"
 									type="datetime-local"
 									defaultValue="2017-05-24T10:30"
-									inputProps={{
-										shrink: true
-									}}
+									onChange={handleChange}
 								/>
 							</FormControl>
 						</Grid>
 					);
 				})}
-				<Grid item xs={12} lg={12} style={{ textAlign: 'right' }}>
+				<Grid item xs={12} lg={12} style={{ textAlign: "right" }}>
 					<Button
 						variant="outlined"
 						color="primary"

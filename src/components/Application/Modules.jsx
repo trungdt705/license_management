@@ -1,14 +1,19 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
-	Typography,
-	Grid,
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
+	Grid,
+	Typography,
+	List,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons/";
-import Features from "./Features";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as ActionTypes from "../../store/Package/Types";
+// import Features from "./Features";
+import * as Types from "../../store/sagas/commonType";
+import ListItemContent from "../ListItem/ListItemContent";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -16,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
-		flexBasis: "33.33%",
+		flexBasis: "66.67%",
 		flexShrink: 0,
 	},
 	secondaryHeading: {
@@ -25,62 +30,62 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function ApplicationModules() {
+export default function ApplicationModules(props) {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
-
+	const [dense] = React.useState(false);
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
 	};
 
+	const packages = useSelector((state) => state.Package.data);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log("useEffect");
+		dispatch({
+			type: Types.GET_LIST,
+			payload: {
+				action: ActionTypes.PACKAGE_GET_LIST,
+				path: `packages?app=${props.appId}`,
+			},
+		});
+	}, []);
+
 	return (
 		<div className={classes.root}>
-			<Accordion
-				expanded={expanded === "panel1"}
-				onChange={handleChange("panel1")}
-				elevation={0}
-			>
-				<AccordionSummary
-					expandIcon={<ExpandMoreIcon />}
-					aria-controls="panel1bh-content"
-					id="panel1bh-header"
-				>
-					<Typography className={classes.heading}>
-						Module 1
-					</Typography>
-					<Typography className={classes.secondaryHeading}>
-						I am an accordion
-					</Typography>
-				</AccordionSummary>
-				<AccordionDetails>
-					<Grid container>
-						<Features />
-					</Grid>
-				</AccordionDetails>
-			</Accordion>
-			<Accordion
-				expanded={expanded === "panel2"}
-				onChange={handleChange("panel2")}
-				elevation={0}
-			>
-				<AccordionSummary
-					expandIcon={<ExpandMoreIcon />}
-					aria-controls="panel2bh-content"
-					id="panel2bh-header"
-				>
-					<Typography className={classes.heading}>
-						Module 2
-					</Typography>
-					<Typography className={classes.secondaryHeading}>
-						Module 2
-					</Typography>
-				</AccordionSummary>
-				<AccordionDetails>
-					<Grid container>
-						<Features />
-					</Grid>
-				</AccordionDetails>
-			</Accordion>
+			{packages.length > 0 &&
+				packages.map((item) => {
+					return (
+						<Accordion
+							expanded={expanded === item.id}
+							onChange={handleChange(item.id)}
+							elevation={0}
+							key={item.id}
+						>
+							<AccordionSummary
+								expandIcon={<ExpandMoreIcon />}
+								aria-controls={`${item.id}-content`}
+								id={`${item.id}-header`}
+							>
+								<Typography className={classes.heading}>
+									{item.name}
+								</Typography>
+								{/* <Typography className={classes.secondaryHeading}>
+								Priority: {item.priority}
+							</Typography> */}
+							</AccordionSummary>
+							<AccordionDetails>
+								<Grid container>
+									<Grid item xs={12} md={12}>
+										<List dense={dense}>
+											<ListItemContent text={"test"} />
+										</List>
+									</Grid>
+								</Grid>
+							</AccordionDetails>
+						</Accordion>
+					);
+				})}
 		</div>
 	);
 }

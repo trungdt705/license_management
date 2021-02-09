@@ -69,13 +69,13 @@ const ApplicationTab = (props) => {
 				<AntTab label="License type" {...a11yProps(2)} />
 			</CustomTab>
 			<TabPanel index={0} value={value}>
-				<Features />
+				<Features appId={props.appId} />
 			</TabPanel>
 			<TabPanel index={1} value={value}>
-				<Modules />
+				<Modules appId={props.appId} />
 			</TabPanel>
 			<TabPanel index={2} value={value}>
-				<LicenseTypes />
+				<LicenseTypes appId={props.appId} />
 			</TabPanel>
 		</div>
 	);

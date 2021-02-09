@@ -1,16 +1,14 @@
-import React from "react";
-import clsx from "clsx";
 import {
+	Divider,
 	Drawer,
 	IconButton,
-	Divider,
 	List,
 	makeStyles,
 	useTheme,
-	Hidden,
 } from "@material-ui/core";
 import { ChevronLeft as ChevronLeftIcon } from "@material-ui/icons";
-import ListItemLink from "../../components/ListItem/ListItem";
+import clsx from "clsx";
+import React from "react";
 
 const drawerWidth = 240;
 
