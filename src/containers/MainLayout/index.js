@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import clsx from "clsx";
+import { Container, Typography } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import AlertDialog from "../../components/Dialog/index";
 import CustomAppBar from "./AppBar";
-import CustomDrawer from "./Drawer";
-import { Container, Grid, Typography } from "@material-ui/core";
-import Footer from "./Footer";
+import { useSnackbar } from "notistack";
+import Notifier from "../../components/Notifier";
 
 const drawerWidth = 240;
 
@@ -100,6 +100,7 @@ export default function MainLayout(props) {
 
 	return (
 		<div className={classes.root}>
+			<Notifier />
 			<CustomAppBar
 				open={open}
 				title={title}
@@ -120,6 +121,7 @@ export default function MainLayout(props) {
 					Support: 0977.459.333
 				</Typography>
 			</div>
+			<AlertDialog />
 		</div>
 	);
 }

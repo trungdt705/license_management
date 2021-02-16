@@ -65,7 +65,6 @@ export default function LicenseTypes() {
 	const dispatch = useDispatch();
 	const licenseTypes = useSelector((state) => state.LicenseType.data);
 	useEffect(() => {
-		console.log("useEffect");
 		dispatch({
 			type: Types.GET_LIST,
 			payload: {
@@ -77,7 +76,7 @@ export default function LicenseTypes() {
 
 	return (
 		<React.Fragment>
-			<Grid container spacing={2} style={{ marginTop: 4 }}>
+			<Grid container spacing={1} style={{ marginTop: 4 }}>
 				{licenseTypes.length > 0 &&
 					licenseTypes.map((item) => {
 						return (

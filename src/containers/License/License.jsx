@@ -1,9 +1,7 @@
-import moment from "moment-timezone";
 import {
 	CssBaseline,
 	Grid,
 	Grow,
-	IconButton,
 	List,
 	ListItem,
 	ListItemSecondaryAction,
@@ -17,11 +15,13 @@ import {
 	Visibility as VisibilityIcon,
 	VisibilityOff as VisibilityOffIcon,
 } from "@material-ui/icons";
+import clsx from "clsx";
+import moment from "moment-timezone";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDialog from "../../components/Dialog";
-import * as Types from "../../store/sagas/commonType";
 import * as ActionTypes from "../../store/License/Types";
+import * as Types from "../../store/sagas/commonType";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -34,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 10,
 		position: "relative",
 		borderLeft: `10px solid ${theme.palette.error.main}`,
+	},
+	pending: {
+		borderLeft: `10px solid #e8dd13`,
+	},
+	activated: {
+		borderLeft: `10px solid green`,
+	},
+	deactivated: {
+		borderLeft: `10px solid red`,
 	},
 	// watermark: {
 	// 	alignItems: "center",
@@ -160,7 +169,17 @@ const LicenseManagement = () => {
 								key={item.id}
 							>
 								<Grow in={true}>
-									<Paper className={classes.paper}>
+									<Paper
+										className={clsx(
+											classes.paper,
+											item.status === "PENDING" &&
+												classes.pending,
+											item.status === "ACTIVATED" &&
+												classes.activated,
+											item.status === "DEACTIVATED" &&
+												classes.deactivated
+										)}
+									>
 										{/* <div className={classes.watermark}>
 								<div
 									className={classes.watermarkContentVerified}

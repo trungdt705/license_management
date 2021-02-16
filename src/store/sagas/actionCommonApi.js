@@ -6,7 +6,6 @@ import * as types from "./commonType";
 // });
 
 export const actionReceive = (payload) => {
-	console.log(payload.action);
 	return {
 		type: payload.action,
 		payload: payload.data,
@@ -14,6 +13,13 @@ export const actionReceive = (payload) => {
 };
 
 export const actionCreate = (payload) => {
+	return {
+		type: payload.action,
+		payload: payload.data,
+	};
+};
+
+export const actionDelete = (payload) => {
 	return {
 		type: payload.action,
 		payload: payload.data,

@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
 const CommonCard = (props) => {
 	const classes = useStyles();
 	const history = useHistory();
-	const applicationInfoPage = (id) => {
-		history.push(`/applications/${id}`, { title: "Application Detail" });
-	};
+	// const applicationInfoPage = (id) => {
+	// 	history.push(`/applications/${id}/detail`, {
+	// 		title: "Application Detail",
+	// 	});
+	// };
 	const {
 		cardIcon: CardIcon,
 		cardContent: CardContent,
@@ -31,7 +33,7 @@ const CommonCard = (props) => {
 				item
 				xs={12}
 				lg={4}
-				onClick={() => applicationInfoPage(data.id)}
+				// onClick={() => applicationInfoPage(data.id)}
 			>
 				<Paper
 					className={classes.paper}

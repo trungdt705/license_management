@@ -12,10 +12,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const EditIconButton = () => {
+const EditIconButton = (props) => {
 	const classes = useStyles();
 	return (
-		<IconButton size="small" className={classes.edit}>
+		<IconButton
+			size="small"
+			className={classes.edit}
+			onClick={props.onGotoEdit}
+		>
 			<EditIcon />
 		</IconButton>
 	);

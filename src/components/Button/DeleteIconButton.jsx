@@ -1,6 +1,8 @@
 import { makeStyles, IconButton } from "@material-ui/core";
 import { DeleteForever as DeleteForeverIcon } from "@material-ui/icons";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AlertDialog from "../../components/Dialog/index";
 
 const useStyles = makeStyles((theme) => ({
 	delete: {
@@ -13,12 +15,30 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DeleteIconButton = () => {
+const DeleteIconButton = (props) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const handleClickOpen = (event) => {
+		event.stopPropagation();
+		dispatch({
+			type: "SHOW_DIALOG",
+			payload: {
+				open: true,
+				payload: props.actionPayload,
+			},
+		});
+	};
 	return (
-		<IconButton size="small" color="primary" className={classes.delete}>
-			<DeleteForeverIcon />
-		</IconButton>
+		<React.Fragment>
+			<IconButton
+				size="small"
+				color="primary"
+				className={classes.delete}
+				onClick={handleClickOpen}
+			>
+				<DeleteForeverIcon />
+			</IconButton>
+		</React.Fragment>
 	);
 };
 

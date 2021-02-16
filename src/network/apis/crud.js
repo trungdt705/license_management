@@ -3,7 +3,6 @@ const handlerEnabled = false;
 
 // Replace endpoint and change api name
 const getList = async (payload) => {
-	console.log("getList", payload);
 	return await axiosInstance.get(payload.path, {
 		handlerEnabled,
 		headers: {
@@ -22,8 +21,8 @@ const create = async (payload) => {
 };
 
 const update = async (payload) => {
-	return await axiosInstance.post(
-		`${payload.path}/${payload.id}`,
+	return await axiosInstance.put(
+		`${payload.path}/${payload.id}/`,
 		payload.data,
 		{
 			handlerEnabled,
@@ -35,7 +34,16 @@ const update = async (payload) => {
 };
 
 const getOne = async (payload) => {
-	return await axiosInstance.get(`${payload.path}/${payload.id}`, {
+	return await axiosInstance.get(`${payload.path}/${payload.id}/`, {
+		handlerEnabled,
+		headers: {
+			"x-api-key": "HIXNBTV3VY4COKVRCELRJIRD",
+		},
+	});
+};
+
+const remove = async (payload) => {
+	return await axiosInstance.delete(`${payload.path}/${payload.id}/`, {
 		handlerEnabled,
 		headers: {
 			"x-api-key": "HIXNBTV3VY4COKVRCELRJIRD",
@@ -47,4 +55,5 @@ export default {
 	create,
 	getOne,
 	update,
+	remove,
 };

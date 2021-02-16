@@ -1,6 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { StylesProvider, ThemeProvider } from "@material-ui/styles";
 import React, { useEffect } from "react";
+import { SnackbarProvider } from "notistack";
 import App from "./containers/App";
 
 function ThemeApp() {
@@ -43,7 +44,9 @@ function ThemeApp() {
 	return (
 		<StylesProvider>
 			<ThemeProvider theme={theme}>
-				<App />
+				<SnackbarProvider maxSnack={3}>
+					<App />
+				</SnackbarProvider>
 			</ThemeProvider>
 		</StylesProvider>
 	);

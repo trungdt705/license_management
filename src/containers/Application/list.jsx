@@ -14,7 +14,9 @@ import {
 } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { pink } from "@material-ui/core/colors";
+import moment from "moment-timezone";
 import * as Types from "../../store/sagas/commonType";
+import * as ActionTypes from "../../store/Application/Types";
 import CommonCard from "../../components/Card/CommonCard";
 import DeleteIconButton from "../../components/Button/DeleteIconButton";
 import EditIconButton from "../../components/Button/EditIconButton";
@@ -38,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
 		border: "3px dashed #d1cfd4",
 		backgroundColor: "#e9e6ed",
 	},
+	showLink: {
+		"&:hover": {
+			textDecoration: "underline",
+		},
+	},
 }));
 
 const CardIcon = (props) => {
@@ -51,19 +58,55 @@ const CardIcon = (props) => {
 
 const CardContent = (props) => {
 	const { data } = props;
+	const history = useHistory();
+	const classes = useStyles();
+	const applicationInfoPage = (id) => {
+		history.push(`/applications/${id}/detail`, {
+			title: "Application Detail",
+		});
+	};
 	return (
 		<React.Fragment>
-			<Typography variant="subtitle2">{data.name}</Typography>
-			<Typography variant="caption">Published: 01/01/2021</Typography>
+			<Typography
+				variant="subtitle2"
+				className={classes.showLink}
+				onClick={() => applicationInfoPage(data.id)}
+			>
+				{data.name}
+			</Typography>
+			<Typography variant="caption">
+				Published:{" "}
+				{data.publish_at
+					? moment(data.publish_at).format("DD-MM-YYYY")
+					: "Published yet!!"}
+			</Typography>
 		</React.Fragment>
 	);
 };
 
-const CardAction = () => {
+const CardAction = (props) => {
+	const history = useHistory();
+	const { data } = props;
+	const dispatch = useDispatch();
+	const goToEdit = (event) => {
+		event.stopPropagation();
+		history.push(`/applications/${data.id}/edit`, {
+			title: "Edit application",
+		});
+	};
 	return (
 		<React.Fragment>
-			<EditIconButton />
-			<DeleteIconButton />
+			<EditIconButton onGotoEdit={goToEdit} />
+			<DeleteIconButton
+				actionPayload={{
+					type: "DELETE",
+					payload: {
+						id: data.id,
+						path: "applications",
+						action: ActionTypes.APPLICATION_DELETE,
+					},
+				}}
+			/>
 		</React.Fragment>
 	);
 };
@@ -81,24 +124,23 @@ export default function ApplicationList() {
 				path: "applications",
 			},
 		});
+		// return () => {
+		// 	dispatch({ type: "destroy_session" });
+		// };
 	}, []);
-	const showDialog = () => {
-		console.log("ok");
-	};
+	const showDialog = () => {};
 	return (
 		<React.Fragment>
-			<Grid container spacing={2}>
+			<Grid container spacing={1}>
 				<Grid item xs={12} lg={4}>
-					<Paper
-						className={classes.add}
-						elevation={0}
-						onClick={() =>
-							history.push("/applications/action/create", {
-								title: "Create Application",
-							})
-						}
-					>
-						<IconButton>
+					<Paper className={classes.add} elevation={0}>
+						<IconButton
+							onClick={() =>
+								history.push("/applications/create", {
+									title: "Create Application",
+								})
+							}
+						>
 							<CustomsizeIcon
 								component={AddBoxIcon}
 								spacing={4}
@@ -115,6 +157,7 @@ export default function ApplicationList() {
 								cardIcon={CardIcon}
 								cardContent={CardContent}
 								cardAction={CardAction}
+								variant="outlined"
 							/>
 						);
 					})}

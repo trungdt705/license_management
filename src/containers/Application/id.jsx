@@ -1,5 +1,6 @@
 import { Typography, makeStyles, useTheme } from "@material-ui/core";
 import { VerifiedUser } from "@material-ui/icons";
+import moment from "moment-timezone";
 import ApplicationTab from "../../components/Tab/CustomTab";
 import LargeIcon from "../../components/Icon/LargeIcon";
 import React, { useEffect } from "react";
@@ -42,8 +43,8 @@ const ApplicationInfo = (props) => {
 				className={classes.publish}
 			>
 				Publish at:{" "}
-				{application.publishAt
-					? application.publishAt
+				{application.publish_at
+					? moment(application.publish_at).format("DD-MM-YYYY")
 					: "Published yet!!"}
 			</Typography>
 			{application.id && <ApplicationTab appId={id} />}

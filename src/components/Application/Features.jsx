@@ -11,13 +11,11 @@ import { useHistory } from "react-router-dom";
 // const useStyles = makeStyles((theme) => ({}));
 
 const Features = (props) => {
-	console.log("Features", props);
 	const [dense] = React.useState(false);
 	const history = useHistory();
 	const features = useSelector((state) => state.Feature.data);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log("useEffect");
 		dispatch({
 			type: Types.GET_LIST,
 			payload: {
@@ -25,9 +23,12 @@ const Features = (props) => {
 				path: `features?app=${props.appId}`,
 			},
 		});
+		// return () => {
+		// 	dispatch({ type: "destroy_session" });
+		// };
 	}, []);
 	const addFeature = () => {
-		history.push("/features/action/create");
+		history.push("/features/create", { title: "Create feature" });
 	};
 	return (
 		<Grid container>
@@ -42,7 +43,9 @@ const Features = (props) => {
 							return (
 								<ListItemContent
 									text={item.name}
+									id={item.id}
 									key={item.id}
+									// deleteAction={ActionTypes.FEATURE_DELETE}
 								/>
 							);
 						})}

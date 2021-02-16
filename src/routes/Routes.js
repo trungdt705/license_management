@@ -8,6 +8,7 @@ import LicenseManagement from "../containers/License/License";
 import MainLayout from "../containers/MainLayout";
 import Packages from "../containers/Modules";
 import Setting from "../containers/Setting/Setting";
+import { routeConfigData as RouteConfig } from "../utils/contants/config";
 
 const Routes = (props) => {
 	return (
@@ -16,47 +17,32 @@ const Routes = (props) => {
 				<Switch>
 					<Route path="/login" exact />
 					<Route
-						path="/applications/:id"
+						path="/applications/:id/detail"
 						exact
 						render={(props) => {
 							return <MainLayout component={ApplicationInfo} />;
 						}}
 					/>
 					<Route
-						path="/applications/action/create"
+						path="/applications/:id/edit"
 						exact
 						render={(props) => {
 							return (
 								<MainLayout
 									component={Upsert}
-									dataConfig={{
-										title: "Create Application",
-										attributes: {
-											name: {
-												label: "Name",
-												type: "TextField",
-											},
-											description: {
-												label: "Description",
-												type: "TextField",
-											},
-											publishAt: {
-												label: "Publish At",
-												type: "DateTime",
-											},
-										},
-										sagaType: "CREATE",
-										actionType: "APPLICATION_CREATE",
-										api: {
-											path: "/applications",
-											method: "POST",
-										},
-										actions: {
-											create: true,
-											edit: false,
-											cancel: true,
-										},
-									}}
+									dataConfig={RouteConfig.application.update}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/applications/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.application.create}
 								/>
 							);
 						}}
@@ -69,49 +55,25 @@ const Routes = (props) => {
 						}}
 					/>
 					<Route
-						path="/features/action/create"
+						path="/features/create"
 						exact
 						render={(props) => {
 							return (
 								<MainLayout
 									component={Upsert}
-									dataConfig={{
-										title: "Create Features",
-										apiRef: [
-											{
-												saga: "GET_LIST",
-												action: "APPLICATION_GET_LIST",
-												path: "applications",
-												label: "Application",
-											},
-										],
-										attributes: {
-											name: {
-												label: "Name",
-												type: "TextField",
-											},
-											description: {
-												label: "Description",
-												type: "TextField",
-											},
-											app: {
-												label: "Application",
-												type: "Select",
-												apiRef: true,
-											},
-										},
-										sagaType: "CREATE",
-										actionType: "FEATURE_CREATE",
-										api: {
-											path: "features",
-											method: "POST",
-										},
-										actions: {
-											create: true,
-											edit: false,
-											cancel: true,
-										},
-									}}
+									dataConfig={RouteConfig.feature.create}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/features/:id/edit"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.feature.update}
 								/>
 							);
 						}}

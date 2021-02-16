@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
 const CustomAppBar = (props) => {
 	const classes = useStyles();
 	const history = useHistory();
-	console.log(history);
 	const goBack = () => {
 		if (history.location.pathname === "/") return;
 		history.goBack();
@@ -91,9 +90,10 @@ const CustomAppBar = (props) => {
 						className={classes.menuButton}
 						color="inherit"
 						aria-label="open drawer"
+						onClick={goBack}
 					>
 						{history.location.pathname !== "/" ? (
-							<ArrowBackIcon onClick={goBack} />
+							<ArrowBackIcon />
 						) : (
 							""
 						)}
@@ -112,7 +112,9 @@ const CustomAppBar = (props) => {
 					<Typography variant="h6" noWrap className={classes.title}>
 						{history.location.pathname === "/"
 							? "License management"
-							: history.location.state.title}
+							: history.location.state
+							? history.location.state.title
+							: "License management"}
 					</Typography>
 					<IconButton
 						edge="end"

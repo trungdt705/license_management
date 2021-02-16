@@ -1,4 +1,5 @@
 import * as types from "./Types";
+import { remove } from "lodash";
 
 const INITIAL_STATE = {
 	data: [],
@@ -22,6 +23,13 @@ export default (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				one: action.payload,
+			};
+		case types.APPLICATION_DELETE:
+			let newData = [...state.data];
+			remove(newData, (item) => item.id === action.payload.id);
+			return {
+				...state,
+				data: newData,
 			};
 		default:
 			return state;

@@ -76,11 +76,18 @@ export default function ApplicationModules(props) {
 							</AccordionSummary>
 							<AccordionDetails>
 								<Grid container>
-									<Grid item xs={12} md={12}>
-										<List dense={dense}>
-											<ListItemContent text={"test"} />
-										</List>
-									</Grid>
+									{item.features.map((feature) => {
+										return (
+											<Grid item xs={12} md={12}>
+												<List dense={dense}>
+													<ListItemContent
+														text={feature.name}
+														id={feature.id}
+													/>
+												</List>
+											</Grid>
+										);
+									})}
 								</Grid>
 							</AccordionDetails>
 						</Accordion>

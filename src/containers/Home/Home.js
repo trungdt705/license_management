@@ -1,9 +1,8 @@
 import { Grid, Grow, makeStyles, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { MENU as menu } from "../../utils/contants/home";
-import * as Types from "../../store/TitleBar/Types";
 // import { actionRequest } from '../../store/Feature1/FeatureAction';
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -39,7 +38,10 @@ const Home = () => {
 							key={item.link}
 						>
 							<Grow in={true}>
-								<Paper className={classes.paper}>
+								<Paper
+									className={classes.paper}
+									variant="outlined"
+								>
 									{item.icon}
 									<Typography variant="h6">
 										{item.name}
