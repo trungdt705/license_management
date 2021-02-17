@@ -1,14 +1,14 @@
-import React, { Suspense } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Upsert from "../components/Upsert";
-import ApplicationInfo from "../containers/Application/id";
-import Application from "../containers/Application/list";
-import Home from "../containers/Home/Home";
-import LicenseManagement from "../containers/License/License";
-import MainLayout from "../containers/MainLayout";
-import Packages from "../containers/Modules";
-import Setting from "../containers/Setting/Setting";
-import { routeConfigData as RouteConfig } from "../utils/contants/config";
+import React, { Suspense } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Upsert from '../components/Upsert';
+import ApplicationInfo from '../containers/Application/id';
+import Application from '../containers/Application/list';
+import Home from '../containers/Home/Home';
+import LicenseManagement from '../containers/License/License';
+import MainLayout from '../containers/MainLayout';
+import Packages from '../containers/Modules';
+import Setting from '../containers/Setting/Setting';
+import { routeConfigData as RouteConfig } from '../utils/contants/config';
 
 const Routes = (props) => {
 	return (
@@ -83,6 +83,54 @@ const Routes = (props) => {
 						exact
 						render={(props) => {
 							return <MainLayout component={Packages} />;
+						}}
+					/>
+					<Route
+						path="/packages/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.packages.create}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/packages/:id/edit"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.packages.update}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/license-types/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.licenseTypes.create}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/license-types/:id/edit"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.licenseTypes.update}
+								/>
+							);
 						}}
 					/>
 					<Route

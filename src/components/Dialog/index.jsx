@@ -1,31 +1,29 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { makeStyles } from "@material-ui/core";
-import { Delete as DeleteIcon } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Delete as DeleteIcon } from '@material-ui/icons';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 	backDrop: {
-		background: "rgba(180, 180, 180, 0.5)",
-	},
+		background: 'rgba(180, 180, 180, 0.5)'
+	}
 }));
 
 export default function AlertDialog(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const open = useSelector((state) => state["Dialog"].open);
-	const payload = useSelector((state) => state["Dialog"].payload);
+	const open = useSelector((state) => state['Dialog'].open);
+	const payload = useSelector((state) => state['Dialog'].payload);
 	const handleClose = () => {
 		dispatch({
-			type: "SHOW_DIALOG",
+			type: 'SHOW_DIALOG',
 			payload: {
-				open: false,
-			},
+				open: false
+			}
 		});
 	};
 	const removeItem = () => {
@@ -42,17 +40,17 @@ export default function AlertDialog(props) {
 				aria-describedby="alert-dialog-description"
 				BackdropProps={{
 					classes: {
-						root: classes.backDrop,
-					},
+						root: classes.backDrop
+					}
 				}}
 			>
 				<DialogTitle
 					id="alert-dialog-title"
 					style={{
-						borderBottom: "1px solid #f5f0f0",
+						borderBottom: '1px solid #f5f0f0'
 					}}
 				>
-					{"Do you want to remove this item?"}
+					{'Do you want to remove this item?'}
 				</DialogTitle>
 				{/* <DialogContent>
 					<DialogContentText id="alert-dialog-description">

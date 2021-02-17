@@ -1,12 +1,12 @@
-import { Grid, List } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import AddButton from "../Button/AddButton";
-import ListItemContent from "../ListItem/ListItemContent";
-import ListItemHeader from "../ListItem/ListItemHeader";
-import * as Types from "../../store/sagas/commonType";
-import * as ActionTypes from "../../store/Feature/Types";
-import { useHistory } from "react-router-dom";
+import { Grid, List } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import AddButton from '../Button/AddButton';
+import ListItemContent from '../ListItem/ListItemContent';
+import ListItemHeader from '../ListItem/ListItemHeader';
+import * as Types from '../../store/sagas/commonType';
+import * as ActionTypes from '../../store/Feature/Types';
+import { useHistory } from 'react-router-dom';
 
 // const useStyles = makeStyles((theme) => ({}));
 
@@ -20,15 +20,15 @@ const Features = (props) => {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.FEATURE_GET_LIST,
-				path: `features?app=${props.appId}`,
-			},
+				path: `features?app=${props.appId}`
+			}
 		});
 		// return () => {
 		// 	dispatch({ type: "destroy_session" });
 		// };
 	}, []);
 	const addFeature = () => {
-		history.push("/features/create", { title: "Create feature" });
+		history.push('/features/create', { title: 'Create feature' });
 	};
 	return (
 		<Grid container>
@@ -36,7 +36,7 @@ const Features = (props) => {
 				<List dense={dense}>
 					<ListItemHeader
 						component={() => <AddButton action={addFeature} />}
-						content={"Total: 15"}
+						content={'Total: 15'}
 					/>
 					{features.length > 0 &&
 						features.map((item) => {

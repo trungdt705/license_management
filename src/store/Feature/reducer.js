@@ -1,9 +1,9 @@
-import * as types from "./Types";
-import { remove } from "lodash";
+import * as types from './Types';
+import { remove } from 'lodash';
 
 const INITIAL_STATE = {
 	data: [],
-	one: {},
+	one: {}
 };
 
 // Replace with you own reducer
@@ -12,24 +12,24 @@ export default (state = INITIAL_STATE, action) => {
 		case types.FEATURE_GET_LIST:
 			return {
 				...state,
-				data: action.payload,
+				data: action.payload
 			};
 		case types.FEATURE_CREATE:
 			return {
 				...state,
-				...action.payload,
+				...action.payload
 			};
 		case types.FEATURE_GET_ONE:
 			return {
 				...state,
-				one: action.payload,
+				one: action.payload
 			};
 		case types.FEATURE_DELETE:
 			let newData = [...state.data];
 			remove(newData, (item) => item.id === action.payload.id);
 			return {
 				...state,
-				data: newData,
+				data: newData
 			};
 		default:
 			return state;

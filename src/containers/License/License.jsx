@@ -9,41 +9,41 @@ import {
 	makeStyles,
 	Paper,
 	Switch,
-	Typography,
-} from "@material-ui/core";
+	Typography
+} from '@material-ui/core';
 import {
 	Visibility as VisibilityIcon,
-	VisibilityOff as VisibilityOffIcon,
-} from "@material-ui/icons";
-import clsx from "clsx";
-import moment from "moment-timezone";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CustomDialog from "../../components/Dialog";
-import * as ActionTypes from "../../store/License/Types";
-import * as Types from "../../store/sagas/commonType";
+	VisibilityOff as VisibilityOffIcon
+} from '@material-ui/icons';
+import clsx from 'clsx';
+import moment from 'moment-timezone';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomDialog from '../../components/Dialog';
+import * as ActionTypes from '../../store/License/Types';
+import * as Types from '../../store/sagas/commonType';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: "left",
+		textAlign: 'left',
 		color: theme.palette.text.secondary,
 		borderRadius: 10,
-		position: "relative",
-		borderLeft: `10px solid ${theme.palette.error.main}`,
+		position: 'relative',
+		borderLeft: `10px solid ${theme.palette.error.main}`
 	},
 	pending: {
-		borderLeft: `10px solid #e8dd13`,
+		borderLeft: `10px solid #e8dd13`
 	},
 	activated: {
-		borderLeft: `10px solid green`,
+		borderLeft: `10px solid green`
 	},
 	deactivated: {
-		borderLeft: `10px solid red`,
-	},
+		borderLeft: `10px solid red`
+	}
 	// watermark: {
 	// 	alignItems: "center",
 	// 	display: "flex",
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListUser = () => {
-	const [checked, setChecked] = React.useState(["wifi"]);
+	const [checked, setChecked] = React.useState(['wifi']);
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -107,10 +107,10 @@ const ListUser = () => {
 				<ListItemSecondaryAction>
 					<Switch
 						edge="end"
-						onChange={handleToggle("wifi")}
-						checked={checked.indexOf("wifi") !== -1}
+						onChange={handleToggle('wifi')}
+						checked={checked.indexOf('wifi') !== -1}
 						inputProps={{
-							"aria-labelledby": "switch-list-label-wifi",
+							'aria-labelledby': 'switch-list-label-wifi'
 						}}
 					/>
 				</ListItemSecondaryAction>
@@ -122,7 +122,7 @@ const ListUser = () => {
 const LicenseManagement = () => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
-	const [id, setId] = React.useState("");
+	const [id, setId] = React.useState('');
 	const [isShowLicense, setIsShowLicense] = React.useState(false);
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -150,8 +150,8 @@ const LicenseManagement = () => {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.LICENSE_GET_LIST,
-				path: `licenses`,
-			},
+				path: `licenses`
+			}
 		});
 	}, []);
 	return (
@@ -172,11 +172,11 @@ const LicenseManagement = () => {
 									<Paper
 										className={clsx(
 											classes.paper,
-											item.status === "PENDING" &&
+											item.status === 'PENDING' &&
 												classes.pending,
-											item.status === "ACTIVATED" &&
+											item.status === 'ACTIVATED' &&
 												classes.activated,
-											item.status === "DEACTIVATED" &&
+											item.status === 'DEACTIVATED' &&
 												classes.deactivated
 										)}
 									>
@@ -211,7 +211,7 @@ const LicenseManagement = () => {
 												<Typography variant="subtitle2">
 													{moment(
 														item.start_date
-													).format("DD-MM-YYYY")}
+													).format('DD-MM-YYYY')}
 												</Typography>
 											</Grid>
 										</Grid>
@@ -225,7 +225,7 @@ const LicenseManagement = () => {
 												<Typography variant="subtitle2">
 													{moment(
 														item.end_date
-													).format("DD-MM-YYYY")}
+													).format('DD-MM-YYYY')}
 												</Typography>
 											</Grid>
 										</Grid>
@@ -250,7 +250,7 @@ const LicenseManagement = () => {
 														{id === item.id &&
 														isShowLicense
 															? item.license
-															: "*********"}
+															: '*********'}
 													</Typography>
 												</Grid>
 												<Grid item xs={1}>
@@ -280,7 +280,7 @@ const LicenseManagement = () => {
 			<CustomDialog
 				open={open}
 				onHandleClose={handleClose}
-				title={"List User"}
+				title={'List User'}
 				content={ListUser}
 			/>
 		</React.Fragment>
