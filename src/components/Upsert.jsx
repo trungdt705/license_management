@@ -1,4 +1,4 @@
-import MomentFnsUtils from '@date-io/moment'; // choose your lib
+import MomentFnsUtils from "@date-io/moment"; // choose your lib
 import {
 	Button,
 	Checkbox,
@@ -10,31 +10,31 @@ import {
 	MenuItem,
 	OutlinedInput,
 	Select,
-	Typography
-} from '@material-ui/core';
-import { Delete as DeleteIcon, Send as SendIcon } from '@material-ui/icons';
+	Typography,
+} from "@material-ui/core";
+import { Delete as DeleteIcon, Send as SendIcon } from "@material-ui/icons";
 import {
 	KeyboardDateTimePicker,
-	MuiPickersUtilsProvider
-} from '@material-ui/pickers';
-import { pick } from 'lodash';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+	MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import { pick } from "lodash";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		'& .MuiTextField-root': {
+		"& .MuiTextField-root": {
 			margin: theme.spacing(1),
-			width: '100%'
-		}
+			width: "100%",
+		},
 	},
 	isShow: {
-		display: 'none'
+		display: "none",
 	},
 	button: {
-		marginRight: theme.spacing(1)
-	}
+		marginRight: theme.spacing(1),
+	},
 }));
 
 const Upsert = (props) => {
@@ -50,10 +50,10 @@ const Upsert = (props) => {
 	const [data, setData] = React.useState(() => {
 		const initialState = {};
 		Object.keys(dataConfig.attributes).forEach((item) => {
-			if (dataConfig.attributes[item].type === 'MultipleChoice') {
+			if (dataConfig.attributes[item].type === "MultipleChoice") {
 				initialState[item] = [];
 			} else {
-				initialState[item] = '';
+				initialState[item] = "";
 			}
 		});
 		return initialState;
@@ -64,12 +64,12 @@ const Upsert = (props) => {
 			handleDateChange(event);
 			setData((prevState) => ({
 				...prevState,
-				[key]: event
+				[key]: event,
 			}));
 		} else {
 			setData((prevState) => ({
 				...prevState,
-				[key]: event.target.value
+				[key]: event.target.value,
 			}));
 		}
 	};
@@ -80,14 +80,14 @@ const Upsert = (props) => {
 				choices.push(event.target.value);
 				return {
 					...prevState,
-					[key]: choices
+					[key]: choices,
 				};
 			});
 		} else {
 			choices = choices.filter((choice) => choice !== event.target.value);
 			setData((prevState) => ({
 				...prevState,
-				[key]: choices
+				[key]: choices,
 			}));
 		}
 	};
@@ -98,8 +98,8 @@ const Upsert = (props) => {
 				id: id,
 				action: dataConfig.actionType,
 				path: `${dataConfig.api.path}`,
-				data: data
-			}
+				data: data,
+			},
 		});
 		setTimeout(() => {
 			goBack();
@@ -112,22 +112,22 @@ const Upsert = (props) => {
 		history.goBack();
 	};
 	useEffect(() => {
-		if (id) {
+		if (id && one.id !== id) {
 			dispatch({
-				type: 'GET_ONE',
+				type: "GET_ONE",
 				payload: {
 					id: id,
 					action: dataConfig.extraActionType,
-					path: dataConfig.api.path
-				}
+					path: dataConfig.api.path,
+				},
 			});
 		}
-		if (one.id && history.location.pathname.indexOf('/create') < 0) {
+		if (one.id && history.location.pathname.indexOf("/create") < 0) {
 			// setData(pick(one, Object.keys(dataConfig.attributes)));
 			setData(() => {
 				for (const key in dataConfig.attributes) {
 					const data = [];
-					if (dataConfig.attributes[key].type === 'MultipleChoice') {
+					if (dataConfig.attributes[key].type === "MultipleChoice") {
 						one[key].forEach((item) => {
 							data.push(item.id);
 						});
@@ -143,15 +143,22 @@ const Upsert = (props) => {
 					type: item.saga,
 					payload: {
 						action: item.action,
-						path: item.path
-					}
+						path: item.path,
+					},
 				});
 			});
 		}
-		// return () => {
-		// 	dispatch({ type: "destroy_session" });
-		// };
-	}, [one.id, one.updated_at]);
+		return () => {
+			if (history.location.pathname.indexOf("/edit") < 0) {
+				dispatch({
+					type: "REMOVE_ONE",
+					payload: {
+						label: dataConfig.label,
+					},
+				});
+			}
+		};
+	}, [one.id]);
 	return (
 		<React.Fragment>
 			<Grid container spacing={2}>
@@ -162,7 +169,7 @@ const Upsert = (props) => {
 					return (
 						<Grid item xs={12} lg={4} md={6} key={attribute}>
 							{dataConfig.attributes[attribute].type ===
-							'TextField' ? (
+							"TextField" ? (
 								<FormControl
 									variant="outlined"
 									fullWidth
@@ -183,15 +190,15 @@ const Upsert = (props) => {
 										value={
 											data[attribute]
 												? data[attribute]
-												: ''
+												: ""
 										}
 									/>
 								</FormControl>
 							) : (
-								''
+								""
 							)}
 							{dataConfig.attributes[attribute].type ===
-							'Select' ? (
+							"Select" ? (
 								<FormControl
 									variant="outlined"
 									fullWidth
@@ -210,11 +217,11 @@ const Upsert = (props) => {
 											dataConfig.attributes[attribute]
 												.label
 										}
-										defaultValue={''}
+										defaultValue={""}
 										value={
 											data[attribute]
 												? data[attribute]
-												: ''
+												: ""
 										}
 									>
 										<MenuItem value="">
@@ -240,10 +247,10 @@ const Upsert = (props) => {
 									</Select>
 								</FormControl>
 							) : (
-								''
+								""
 							)}
 							{dataConfig.attributes[attribute].type ===
-							'DateTime' ? (
+							"DateTime" ? (
 								<FormControl fullWidth size="small">
 									<MuiPickersUtilsProvider
 										utils={MomentFnsUtils}
@@ -269,10 +276,10 @@ const Upsert = (props) => {
 									</MuiPickersUtilsProvider>
 								</FormControl>
 							) : (
-								''
+								""
 							)}
 							{dataConfig.attributes[attribute].type ===
-							'MultipleChoice' ? (
+							"MultipleChoice" ? (
 								<React.Fragment>
 									<Typography>
 										{dataConfig.attributes[attribute].label}
@@ -310,12 +317,12 @@ const Upsert = (props) => {
 										})}
 								</React.Fragment>
 							) : (
-								''
+								""
 							)}
 						</Grid>
 					);
 				})}
-				<Grid item xs={12} lg={12} style={{ textAlign: 'right' }}>
+				<Grid item xs={12} lg={12} style={{ textAlign: "right" }}>
 					<Button
 						variant="outlined"
 						color="primary"

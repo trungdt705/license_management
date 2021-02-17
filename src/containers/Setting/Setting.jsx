@@ -5,7 +5,9 @@ import {
 	ViewModule as ViewModuleIcon,
 	VpnKey as VpnKeyIcon,
 } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect } from "react";
+import moment from "moment-timezone";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
 	infoTitle: {
@@ -45,6 +47,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Setting = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const currentUser = useSelector((state) => state.Partner.current);
+	const totalApplication = useSelector((state) => state.Partner.application);
+	const totalPackages = useSelector((state) => state.Partner.package);
+	const totalLicenses = useSelector((state) => state.Partner.license);
+	useEffect(() => {
+		console.log("useEffect");
+		dispatch({ type: "PARTNER_GET_INFO" });
+	}, []);
 	return (
 		<React.Fragment>
 			<Grid container spacing={2}>
@@ -59,13 +70,20 @@ const Setting = () => {
 									variant="h5"
 									className={classes.infoTitle}
 								>
-									{"Công ty UI Template".toUpperCase()}
+									{currentUser.name
+										? currentUser.name.toUpperCase()
+										: ""}
 								</Typography>
 								<Typography
 									variant="caption"
 									className={classes.publish}
 								>
-									Publish at: 01/01/2021
+									Publish at:{" "}
+									{currentUser.created_at
+										? moment(currentUser.created_at).format(
+												"DD-MM-YYYY"
+										  )
+										: ""}
 								</Typography>
 								<Typography
 									variant="subtitle2"
@@ -98,7 +116,9 @@ const Setting = () => {
 								className={classes.iconDetail}
 							>
 								<AppsIcon style={{ color: "green" }} />
-								<span className={classes.numberDetail}>24</span>
+								<span className={classes.numberDetail}>
+									{totalApplication}
+								</span>
 							</Grid>
 							<Grid
 								item
@@ -107,7 +127,9 @@ const Setting = () => {
 								className={classes.iconDetail}
 							>
 								<ViewModuleIcon style={{ color: "orange" }} />
-								<span className={classes.numberDetail}>30</span>
+								<span className={classes.numberDetail}>
+									{totalPackages}
+								</span>
 							</Grid>
 							<Grid
 								item
@@ -117,7 +139,7 @@ const Setting = () => {
 							>
 								<VpnKeyIcon style={{ color: "red" }} />
 								<span className={classes.numberDetail}>
-									100
+									{totalLicenses}
 								</span>
 							</Grid>
 						</Grid>

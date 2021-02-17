@@ -1,9 +1,9 @@
-import store from '../../store';
+import store from "../../store";
 // import { loader } from "../../store/Loader/LoaderAction";
 // import Auth from '../../utils/Auth';
 
 export const isHandlerEnabled = (config = {}) => {
-	return config.hasOwnProperty('handlerEnabled') && !config.handlerEnabled
+	return config.hasOwnProperty("handlerEnabled") && !config.handlerEnabled
 		? false
 		: true;
 };

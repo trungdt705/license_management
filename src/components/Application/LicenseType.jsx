@@ -1,24 +1,24 @@
-import { Avatar, Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Pageview as PageviewIcon } from '@material-ui/icons';
-import React, { useEffect } from 'react';
-import DeleteIconButton from '../Button/DeleteIconButton';
-import EditIconButton from '../Button/EditIconButton';
-import CommonCard from '../Card/CommonCard';
-import CustomsizeIcon from '../Icon/LargeIcon';
-import { useDispatch, useSelector } from 'react-redux';
-import * as ActionTypes from '../../store/LicenseType/Types';
-import * as Types from '../../store/sagas/commonType';
-import moment from 'moment-timezone';
-import AddButton from '../Button/AddButton';
-import { useHistory } from 'react-router-dom';
+import { Avatar, Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Pageview as PageviewIcon } from "@material-ui/icons";
+import React, { useEffect } from "react";
+import DeleteIconButton from "../Button/DeleteIconButton";
+import EditIconButton from "../Button/EditIconButton";
+import CommonCard from "../Card/CommonCard";
+import CustomsizeIcon from "../Icon/LargeIcon";
+import { useDispatch, useSelector } from "react-redux";
+import * as ActionTypes from "../../store/LicenseType/Types";
+import * as Types from "../../store/sagas/commonType";
+import moment from "moment-timezone";
+import AddButton from "../Button/AddButton";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		'& > *': {
-			margin: theme.spacing(1)
-		}
-	}
+		"& > *": {
+			margin: theme.spacing(1),
+		},
+	},
 }));
 
 const CardIcon = (props) => {
@@ -36,7 +36,7 @@ const CardContent = (props) => {
 		<React.Fragment>
 			<Typography variant="subtitle2">{data.name}</Typography>
 			<Typography variant="caption">
-				Published: {moment(data.created_at).format('DD-MM-YYYY')}
+				Published: {moment(data.created_at).format("DD-MM-YYYY")}
 			</Typography>
 			{/* <Typography>
 				<StyledBadge
@@ -63,7 +63,7 @@ const CardAction = (props) => {
 				edge="end"
 				onGotoEdit={() =>
 					history.push(`/license-types/${data.id}/edit`, {
-						title: 'Edit License Type'
+						title: "Edit License Type",
 					})
 				}
 			/>
@@ -72,7 +72,7 @@ const CardAction = (props) => {
 	);
 };
 
-export default function LicenseTypes() {
+export default function LicenseTypes(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const licenseTypes = useSelector((state) => state.LicenseType.data);
@@ -81,8 +81,8 @@ export default function LicenseTypes() {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.LICENSETYPE_GET_LIST,
-				path: 'license_types'
-			}
+				path: `license_types?app=${props.appId}`,
+			},
 		});
 	}, []);
 
@@ -91,10 +91,10 @@ export default function LicenseTypes() {
 			<Typography
 				component="h1"
 				variant="h4"
-				style={{ textAlign: 'right' }}
+				style={{ textAlign: "right" }}
 			>
 				<AddButton
-					action={() => history.push('/license-types/create')}
+					action={() => history.push("/license-types/create")}
 				></AddButton>
 			</Typography>
 			<Grid container spacing={1} style={{ marginTop: 4 }}>
