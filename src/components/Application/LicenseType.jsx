@@ -67,7 +67,16 @@ const CardAction = (props) => {
 					})
 				}
 			/>
-			<DeleteIconButton />
+			<DeleteIconButton
+				actionPayload={{
+					type: "DELETE",
+					payload: {
+						id: data.id,
+						path: "license_types",
+						action: ActionTypes.LICENSETYPE_DELETE,
+					},
+				}}
+			/>
 		</React.Fragment>
 	);
 };
