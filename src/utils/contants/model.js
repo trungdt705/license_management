@@ -67,5 +67,28 @@ export const models = {
 			type: 'MultipleChoice',
 			apiRef: true
 		}
+	},
+	license: {
+		namespace: {
+			label: 'Namespace',
+			type: 'TextField'
+		},
+		start_date: {
+			label: 'Start date',
+			type: 'DateTime'
+		},
+		end_date: {
+			label: 'End date',
+			type: 'DateTime'
+		},
+		user_limit: {
+			label: 'User limit',
+			type: 'NumberField'
+		},
+		license_type: {
+			label: 'LicenseType',
+			type: 'SelectBox',
+			apiRef: true
+		}
 	}
 };

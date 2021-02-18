@@ -1,27 +1,20 @@
-import * as types from "./commonType";
+import * as types from './commonType';
 
 //Replace action name and update action types
 // export const actionRequest = () => ({
 // 	type: types.GET_DATA_REQUEST
 // });
 
-export const actionReceive = (payload) => {
+export const actionAPISuccess = (payload) => {
 	return {
 		type: payload.action,
-		payload: payload.data,
+		payload: payload.data
 	};
 };
 
-export const actionCreate = (payload) => {
+export const actionAPIError = (payload) => {
 	return {
 		type: payload.action,
-		payload: payload.data,
-	};
-};
-
-export const actionDelete = (payload) => {
-	return {
-		type: payload.action,
-		payload: payload.data,
+		payload: payload.data
 	};
 };

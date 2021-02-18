@@ -1,7 +1,7 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
-import { removeSnackbar } from "../store/Notify/action";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import { removeSnackbar } from '../store/Notify/action';
 
 let displayed = [];
 
@@ -36,6 +36,7 @@ const Notifier = () => {
 				enqueueSnackbar(message, {
 					key,
 					...options,
+					autoHideDuration: 3000,
 					onClose: (event, reason, myKey) => {
 						if (options.onClose) {
 							options.onClose(event, reason, myKey);
@@ -45,7 +46,7 @@ const Notifier = () => {
 						// remove this snackbar from redux store
 						dispatch(removeSnackbar(myKey));
 						removeDisplayed(myKey);
-					},
+					}
 				});
 
 				// keep track of snackbars that we've displayed

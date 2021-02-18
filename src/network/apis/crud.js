@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, all } from 'redux-saga/effects';
 import { IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 import * as ACTIONS from '../../store/sagas/actionCommonApi';
@@ -28,7 +28,7 @@ function* getList(payload) {
 			})
 		);
 		yield put(
-			ACTIONS.actionReceive({
+			ACTIONS.actionAPISuccess({
 				data: response.data.results,
 				action: payload.action
 			})
@@ -49,7 +49,7 @@ function* create(payload) {
 			})
 		);
 		yield put(
-			ACTIONS.actionReceive({
+			ACTIONS.actionAPISuccess({
 				data: response.data.results,
 				action: payload.action
 			})
@@ -59,57 +59,109 @@ function* create(payload) {
 				message: 'Create successfull',
 				options: {
 					key: new Date().getTime() + Math.random(),
-					variant: 'success',
-					action: (key) => (
-						<IconButton
-							onClick={() =>
-								store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-							}
-						>
-							<CloseIcon></CloseIcon>
-						</IconButton>
-					)
+					variant: 'success'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
 				}
 			})
 		);
 	} catch (error) {
-		yield put({ type: 'LICENSETYPE_API_ERROR' });
+		const errorDetail = [];
+		for (const key in error.response.data.detail) {
+			if (Object.hasOwnProperty.call(error.response.data.detail, key)) {
+				errorDetail.push(`${key}: ${error.response.data.detail[key]}`);
+			}
+		}
+		const actions = errorDetail.map((message) => {
+			return NOTIFYACTIONS.enqueueSnackbar({
+				message: message,
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'error'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			});
+		});
+		yield all(actions.map((ac) => put(ac)));
 	}
 }
 
 function* update(payload) {
-	const response = yield call(() =>
-		axiosInstance.put(`${payload.path}/${payload.id}/`, payload.data, {
-			handlerEnabled,
-			headers: {
-				'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+	try {
+		const response = yield call(() =>
+			axiosInstance.put(`${payload.path}/${payload.id}/`, payload.data, {
+				handlerEnabled,
+				headers: {
+					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+				}
+			})
+		);
+		yield put(
+			ACTIONS.actionAPISuccess({
+				data: response,
+				action: payload.action
+			})
+		);
+		yield put(
+			NOTIFYACTIONS.enqueueSnackbar({
+				message: 'Update successfull',
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'success'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			})
+		);
+	} catch (error) {
+		const errorDetail = [];
+		for (const key in error.response.data.detail) {
+			if (Object.hasOwnProperty.call(error.response.data.detail, key)) {
+				errorDetail.push(`${key}: ${error.response.data.detail[key]}`);
 			}
-		})
-	);
-	yield put(
-		ACTIONS.actionReceive({
-			data: response,
-			action: payload.action
-		})
-	);
-	yield put(
-		NOTIFYACTIONS.enqueueSnackbar({
-			message: 'Update successfull',
-			options: {
-				key: new Date().getTime() + Math.random(),
-				variant: 'success',
-				action: (key) => (
-					<IconButton
-						onClick={() =>
-							store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-						}
-					>
-						<CloseIcon></CloseIcon>
-					</IconButton>
-				)
-			}
-		})
-	);
+		}
+		const actions = errorDetail.map((message) => {
+			return NOTIFYACTIONS.enqueueSnackbar({
+				message: message,
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'error'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			});
+		});
+		yield all(actions.map((ac) => put(ac)));
+	}
 }
 
 function* getOne(payload) {
@@ -123,31 +175,87 @@ function* getOne(payload) {
 			})
 		);
 		yield put(
-			ACTIONS.actionReceive({
+			ACTIONS.actionAPISuccess({
 				data: response.data,
 				action: payload.action
 			})
 		);
 	} catch (error) {
-		yield put({ type: 'LICENSETYPE_API_ERROR' });
+		yield put(
+			NOTIFYACTIONS.enqueueSnackbar({
+				message: error.response.data.detail,
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'error'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			})
+		);
 	}
 }
 
 function* remove(payload) {
-	const response = yield call(() =>
-		axiosInstance.delete(`${payload.path}/${payload.id}/`, {
-			handlerEnabled,
-			headers: {
-				'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
-			}
-		})
-	);
-	yield put(
-		ACTIONS.actionDelete({
-			data: { data: response.data, id: payload.id },
-			action: payload.action
-		})
-	);
+	try {
+		const response = yield call(() =>
+			axiosInstance.delete(`${payload.path}/${payload.id}/`, {
+				handlerEnabled,
+				headers: {
+					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+				}
+			})
+		);
+		yield put(
+			ACTIONS.actionAPISuccess({
+				data: { data: response.data, id: payload.id },
+				action: payload.action
+			})
+		);
+		yield put(
+			NOTIFYACTIONS.enqueueSnackbar({
+				message: 'Delete successful',
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'success'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			})
+		);
+	} catch (error) {
+		yield put(
+			NOTIFYACTIONS.enqueueSnackbar({
+				message: error.response.data.detail,
+				options: {
+					key: new Date().getTime() + Math.random(),
+					variant: 'error'
+					// action: (key) => (
+					// 	<IconButton
+					// 		onClick={() =>
+					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
+					// 		}
+					// 	>
+					// 		<CloseIcon></CloseIcon>
+					// 	</IconButton>
+					// )
+				}
+			})
+		);
+	}
 }
 export default {
 	getList,

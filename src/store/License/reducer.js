@@ -1,7 +1,8 @@
-import * as types from "./Types";
+import * as types from './Types';
 
 const INITIAL_STATE = {
 	data: [],
+	one: {}
 };
 
 // Replace with you own reducer
@@ -10,12 +11,12 @@ export default (state = INITIAL_STATE, action) => {
 		case types.LICENSE_GET_LIST:
 			return {
 				...state,
-				data: action.payload,
+				data: action.payload
 			};
 		case types.LICENSE_CREATE:
 			return {
 				...state,
-				...action.payload,
+				...action.payload
 			};
 		default:
 			return state;

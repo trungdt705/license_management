@@ -2,7 +2,8 @@ import * as types from './Types';
 
 const INITIAL_STATE = {
 	data: [],
-	one: {}
+	one: {},
+	error: null
 };
 
 // Replace with you own reducer

@@ -4,7 +4,7 @@ import Upsert from '../components/Upsert';
 import ApplicationInfo from '../containers/Application/id';
 import Application from '../containers/Application/list';
 import Home from '../containers/Home/Home';
-import LicenseManagement from '../containers/License/License';
+import LicenseManagement from '../containers/License/LicenseManager';
 import MainLayout from '../containers/MainLayout';
 import Packages from '../containers/Modules';
 import Setting from '../containers/Setting/Setting';
@@ -129,6 +129,18 @@ const Routes = (props) => {
 								<MainLayout
 									component={Upsert}
 									dataConfig={RouteConfig.licenseTypes.update}
+								/>
+							);
+						}}
+					/>
+					<Route
+						path="/license/create"
+						exact
+						render={(props) => {
+							return (
+								<MainLayout
+									component={Upsert}
+									dataConfig={RouteConfig.license.create}
 								/>
 							);
 						}}
