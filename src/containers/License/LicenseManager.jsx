@@ -1,5 +1,6 @@
 import {
 	CssBaseline,
+	Fab,
 	Grid,
 	Grow,
 	List,
@@ -8,21 +9,20 @@ import {
 	ListItemText,
 	makeStyles,
 	Paper,
-	Switch,
-	Typography,
-	Fab
+	Typography
 } from '@material-ui/core';
 import {
+	Add as AddIcon,
+	Brightness1 as Brightness1Icon,
 	Visibility as VisibilityIcon,
-	VisibilityOff as VisibilityOffIcon,
-	Add as AddIcon
+	VisibilityOff as VisibilityOffIcon
 } from '@material-ui/icons';
 import clsx from 'clsx';
 import moment from 'moment-timezone';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import CustomDialog from '../../components/Dialog';
+import ListUserDialog from '../../components/Dialog/ListUserDialog';
 import * as ActionTypes from '../../store/License/Types';
 import * as Types from '../../store/sagas/commonType';
 
@@ -54,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
 		position: 'fixed',
 		bottom: theme.spacing(9),
 		right: theme.spacing(2)
+	},
+	activatedUser: {
+		color: 'green'
+	},
+	deactivatedUser: {
+		color: 'grey'
 	}
 	// watermark: {
 	// 	alignItems: "center",
@@ -84,50 +90,78 @@ const useStyles = makeStyles((theme) => ({
 	// },
 }));
 
-const ListUser = () => {
+const ListUser = (props) => {
 	const [checked, setChecked] = React.useState(['wifi']);
+	const license = useSelector((state) => state.License.one);
 	const classes = useStyles();
-	const handleToggle = (value) => () => {
-		const currentIndex = checked.indexOf(value);
-		const newChecked = [...checked];
+	const dispatch = useDispatch();
+	// const handleToggle = (value) => () => {
+	// 	const currentIndex = checked.indexOf(value);
+	// 	const newChecked = [...checked];
 
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
+	// 	if (currentIndex === -1) {
+	// 		newChecked.push(value);
+	// 	} else {
+	// 		newChecked.splice(currentIndex, 1);
+	// 	}
 
-		setChecked(newChecked);
-	};
+	// 	setChecked(newChecked);
+	// };
+	useEffect(() => {
+		console.log('123');
+		dispatch({
+			type: Types.GET_ONE,
+			payload: {
+				id: props.licenseId,
+				action: ActionTypes.LICENSE_GET_ONE,
+				path: 'licenses'
+			}
+		});
+		// return () => {
+		// 	dispatch({
+		// 		type: 'REMOVE_ONE',
+		// 		payload: {
+		// 			label: 'License'
+		// 		}
+		// 	});
+		// };
+	}, []);
+
 	return (
 		<React.Fragment>
 			<List>
-				<ListItem>
-					<ListItemText
-						id="switch-list-label-wifi"
-						primary={
-							<React.Fragment>
-								<Typography
-									variant="subtitle2"
-									color="textPrimary"
-									display="inline"
-								>
-									dinhthanhtrung7051992@gmai .com fffff
-								</Typography>
-							</React.Fragment>
-						}
-					/>
-					<ListItemSecondaryAction>
-						<Switch
-							edge="end"
-							onChange={handleToggle('wifi')}
-							checked={checked.indexOf('wifi') !== -1}
-							inputProps={{
-								'aria-labelledby': 'switch-list-label-wifi'
-							}}
-						/>
-					</ListItemSecondaryAction>
-				</ListItem>
+				{license && license.user_license
+					? license.user_license.map((item) => {
+							return (
+								<ListItem key={item.id}>
+									<ListItemText
+										id="switch-list-label-wifi"
+										primary={
+											<React.Fragment>
+												<Typography
+													variant="subtitle2"
+													color="textPrimary"
+													display="inline"
+												>
+													{item.user}
+												</Typography>
+											</React.Fragment>
+										}
+									/>
+									<ListItemSecondaryAction>
+										<Brightness1Icon
+											fontSize="small"
+											className={
+												item.status === 'ACTIVATED'
+													? classes.activatedUser
+													: classes.deactivatedUser
+											}
+										/>
+									</ListItemSecondaryAction>
+								</ListItem>
+							);
+					  })
+					: ''}
 			</List>
 		</React.Fragment>
 	);
@@ -139,7 +173,8 @@ const LicenseManagement = () => {
 	const [open, setOpen] = React.useState(false);
 	const [id, setId] = React.useState('');
 	const [isShowLicense, setIsShowLicense] = React.useState(false);
-	const handleClickOpen = () => {
+	const handleClickOpen = (id) => {
+		setId(id);
 		setOpen(true);
 	};
 	const handleClose = () => {
@@ -180,7 +215,7 @@ const LicenseManagement = () => {
 								item
 								xs={12}
 								lg={4}
-								onClick={handleClickOpen}
+								onClick={() => handleClickOpen(item.id)}
 								key={item.id}
 							>
 								<Grow in={true}>
@@ -304,10 +339,11 @@ const LicenseManagement = () => {
 				</Fab>
 			</div>
 
-			<CustomDialog
+			<ListUserDialog
 				open={open}
 				onHandleClose={handleClose}
 				title={'List User'}
+				licenseId={id}
 				content={ListUser}
 			/>
 		</React.Fragment>

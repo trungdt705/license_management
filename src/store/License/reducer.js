@@ -13,6 +13,11 @@ export default (state = INITIAL_STATE, action) => {
 				...state,
 				data: action.payload
 			};
+		case types.LICENSE_GET_ONE:
+			return {
+				...state,
+				one: action.payload
+			};
 		case types.LICENSE_CREATE:
 			return {
 				...state,

@@ -1,8 +1,9 @@
-import { createMuiTheme } from "@material-ui/core/styles";
-import { StylesProvider, ThemeProvider } from "@material-ui/styles";
-import React, { useEffect } from "react";
-import { SnackbarProvider } from "notistack";
-import App from "./containers/App";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { StylesProvider, ThemeProvider } from '@material-ui/styles';
+import React, { useEffect } from 'react';
+import { SnackbarProvider } from 'notistack';
+import { CookiesProvider } from 'react-cookie';
+import App from './containers/App';
 
 function ThemeApp() {
 	// const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -17,37 +18,39 @@ function ThemeApp() {
 		// direction: direction,
 		typography: {
 			fontFamily: [
-				"-apple-system",
-				"BlinkMacSystemFont",
+				'-apple-system',
+				'BlinkMacSystemFont',
 				'"Segoe UI"',
-				"Roboto",
+				'Roboto',
 				'"Helvetica Neue"',
-				"Arial",
-				"sans-serif",
+				'Arial',
+				'sans-serif',
 				'"Apple Color Emoji"',
 				'"Segoe UI Emoji"',
-				'"Segoe UI Symbol"',
-			].join(","),
+				'"Segoe UI Symbol"'
+			].join(',')
 		},
 		palette: {
 			text: {
-				secondary: "#3b1716",
+				secondary: '#3b1716'
 			},
 			primary: {
-				main: "#1976d2",
+				main: '#1976d2'
 			},
 			secondary: {
-				main: "#ac4556",
-			},
-		},
+				main: '#ac4556'
+			}
+		}
 	});
 	return (
 		<StylesProvider>
-			<ThemeProvider theme={theme}>
-				<SnackbarProvider maxSnack={3}>
-					<App />
-				</SnackbarProvider>
-			</ThemeProvider>
+			<CookiesProvider>
+				<ThemeProvider theme={theme}>
+					<SnackbarProvider maxSnack={3}>
+						<App />
+					</SnackbarProvider>
+				</ThemeProvider>
+			</CookiesProvider>
 		</StylesProvider>
 	);
 }

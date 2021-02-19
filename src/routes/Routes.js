@@ -8,22 +8,24 @@ import LicenseManagement from '../containers/License/LicenseManager';
 import MainLayout from '../containers/MainLayout';
 import Packages from '../containers/Modules';
 import Setting from '../containers/Setting/Setting';
+import Login from '../containers/Login/Login';
 import { routeConfigData as RouteConfig } from '../utils/contants/config';
+import PrivateRoute from '../utils/PrivateRoute';
 
 const Routes = (props) => {
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
 			<BrowserRouter>
 				<Switch>
-					<Route path="/login" exact />
-					<Route
+					<Route path="/login" exact component={Login} />
+					<PrivateRoute
 						path="/applications/:id/detail"
 						exact
 						render={(props) => {
 							return <MainLayout component={ApplicationInfo} />;
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/applications/:id/edit"
 						exact
 						render={(props) => {
@@ -35,7 +37,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/applications/create"
 						exact
 						render={(props) => {
@@ -47,14 +49,14 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/applications"
 						exact
 						render={(props) => {
 							return <MainLayout component={Application} />;
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/features/create"
 						exact
 						render={(props) => {
@@ -66,7 +68,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/features/:id/edit"
 						exact
 						render={(props) => {
@@ -78,14 +80,14 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/packages"
 						exact
 						render={(props) => {
 							return <MainLayout component={Packages} />;
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/packages/create"
 						exact
 						render={(props) => {
@@ -97,7 +99,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/packages/:id/edit"
 						exact
 						render={(props) => {
@@ -109,7 +111,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/license-types/create"
 						exact
 						render={(props) => {
@@ -121,7 +123,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/license-types/:id/edit"
 						exact
 						render={(props) => {
@@ -133,7 +135,7 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/license/create"
 						exact
 						render={(props) => {
@@ -145,21 +147,21 @@ const Routes = (props) => {
 							);
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/setting"
 						exact
 						render={(props) => {
 							return <MainLayout component={Setting} />;
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/license-management"
 						exact
 						render={(props) => {
 							return <MainLayout component={LicenseManagement} />;
 						}}
 					/>
-					<Route
+					<PrivateRoute
 						path="/"
 						exact
 						render={(props) => {

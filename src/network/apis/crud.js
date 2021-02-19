@@ -1,29 +1,17 @@
-import { call, put, all } from 'redux-saga/effects';
-import { IconButton } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
-import * as ACTIONS from '../../store/sagas/actionCommonApi';
+import { all, call, put } from 'redux-saga/effects';
 import * as NOTIFYACTIONS from '../../store/Notify/action';
+import * as ACTIONS from '../../store/sagas/actionCommonApi';
 import { axiosInstance } from './index';
-import store from '../../store';
+import { getCookie } from '../../utils/helper';
 const handlerEnabled = false;
 
-// async function test(payload) {
-// 	return await axiosInstance.get(payload.path, {
-// 		handlerEnabled,
-// 		headers: {
-// 			'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
-// 		}
-// 	});
-// }
-
-// Replace endpoint and change api name
 function* getList(payload) {
 	try {
 		const response = yield call(() =>
 			axiosInstance.get(payload.path, {
 				handlerEnabled,
 				headers: {
-					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+					'x-api-key': getCookie('token')
 				}
 			})
 		);
@@ -44,7 +32,7 @@ function* create(payload) {
 			axiosInstance.post(`${payload.path}/`, payload.data, {
 				handlerEnabled,
 				headers: {
-					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+					'x-api-key': getCookie('token')
 				}
 			})
 		);
@@ -60,15 +48,6 @@ function* create(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'success'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			})
 		);
@@ -85,15 +64,6 @@ function* create(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'error'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			});
 		});
@@ -107,7 +77,7 @@ function* update(payload) {
 			axiosInstance.put(`${payload.path}/${payload.id}/`, payload.data, {
 				handlerEnabled,
 				headers: {
-					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+					'x-api-key': getCookie('token')
 				}
 			})
 		);
@@ -123,15 +93,6 @@ function* update(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'success'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			})
 		);
@@ -148,15 +109,6 @@ function* update(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'error'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			});
 		});
@@ -170,7 +122,7 @@ function* getOne(payload) {
 			axiosInstance.get(`${payload.path}/${payload.id}/`, {
 				handlerEnabled,
 				headers: {
-					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+					'x-api-key': getCookie('token')
 				}
 			})
 		);
@@ -187,15 +139,6 @@ function* getOne(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'error'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			})
 		);
@@ -208,7 +151,7 @@ function* remove(payload) {
 			axiosInstance.delete(`${payload.path}/${payload.id}/`, {
 				handlerEnabled,
 				headers: {
-					'x-api-key': 'HIXNBTV3VY4COKVRCELRJIRD'
+					'x-api-key': getCookie('token')
 				}
 			})
 		);
@@ -224,15 +167,6 @@ function* remove(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'success'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			})
 		);
@@ -243,15 +177,6 @@ function* remove(payload) {
 				options: {
 					key: new Date().getTime() + Math.random(),
 					variant: 'error'
-					// action: (key) => (
-					// 	<IconButton
-					// 		onClick={() =>
-					// 			store.dispatch(NOTIFYACTIONS.closeSnackbar(key))
-					// 		}
-					// 	>
-					// 		<CloseIcon></CloseIcon>
-					// 	</IconButton>
-					// )
 				}
 			})
 		);
