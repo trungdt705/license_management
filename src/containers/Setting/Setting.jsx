@@ -60,7 +60,7 @@ const Setting = () => {
 		<React.Fragment>
 			<Grid container spacing={2}>
 				<Grid item xs={12} lg={8}>
-					<Paper>
+					<Paper variant="outlined">
 						<Grid
 							container
 							style={{ display: "flex", alignItems: "center" }}
@@ -99,7 +99,7 @@ const Setting = () => {
 					</Paper>
 				</Grid>
 				<Grid item xs={12} lg={4}>
-					<Paper>
+					<Paper variant="outlined">
 						<Grid container>
 							<Grid item xs={10} lg={10}>
 								<Typography

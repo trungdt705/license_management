@@ -66,12 +66,8 @@ const CardContent = (props) => {
 		});
 	};
 	return (
-		<React.Fragment>
-			<Typography
-				variant="subtitle2"
-				className={classes.showLink}
-				onClick={() => applicationInfoPage(data.id)}
-			>
+		<div onClick={() => applicationInfoPage(data.id)}>
+			<Typography variant="subtitle2" className={classes.showLink}>
 				{data.name}
 			</Typography>
 			<Typography variant="caption">
@@ -80,7 +76,7 @@ const CardContent = (props) => {
 					? moment(data.publish_at).format("DD-MM-YYYY")
 					: "Published yet!!"}
 			</Typography>
-		</React.Fragment>
+		</div>
 	);
 };
 

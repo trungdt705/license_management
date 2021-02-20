@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	paper: {
 		padding: theme.spacing(1),
+		"&:hover": {
+			backgroundColor: "#c0c0c0",
+			cursor: "pointer",
+		},
 	},
 }));
 

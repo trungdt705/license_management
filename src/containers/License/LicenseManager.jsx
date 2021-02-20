@@ -3,64 +3,78 @@ import {
 	Fab,
 	Grid,
 	Grow,
+	IconButton,
 	List,
 	ListItem,
 	ListItemSecondaryAction,
 	ListItemText,
 	makeStyles,
 	Paper,
-	Typography
-} from '@material-ui/core';
+	Typography,
+} from "@material-ui/core";
 import {
 	Add as AddIcon,
 	Brightness1 as Brightness1Icon,
 	Visibility as VisibilityIcon,
-	VisibilityOff as VisibilityOffIcon
-} from '@material-ui/icons';
-import clsx from 'clsx';
-import moment from 'moment-timezone';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import ListUserDialog from '../../components/Dialog/ListUserDialog';
-import * as ActionTypes from '../../store/License/Types';
-import * as Types from '../../store/sagas/commonType';
+	VisibilityOff as VisibilityOffIcon,
+} from "@material-ui/icons";
+import clsx from "clsx";
+import moment from "moment-timezone";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import ListUserDialog from "../../components/Dialog/ListUserDialog";
+import * as ActionTypes from "../../store/License/Types";
+import * as Types from "../../store/sagas/commonType";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
 	},
 	paper: {
 		padding: theme.spacing(1),
-		textAlign: 'left',
+		textAlign: "left",
 		color: theme.palette.text.secondary,
 		borderRadius: 10,
-		position: 'relative',
-		borderLeft: `10px solid ${theme.palette.error.main}`
+		position: "relative",
+		borderLeft: `10px solid ${theme.palette.error.main}`,
 	},
 	pending: {
-		borderLeft: `10px solid #e8dd13`
+		borderLeft: `10px solid #e8dd13`,
 	},
 	activated: {
-		borderLeft: `10px solid green`
+		borderLeft: `10px solid green`,
 	},
 	deactivated: {
-		borderLeft: `10px solid red`
+		borderLeft: `10px solid red`,
 	},
 	margin: {
-		margin: theme.spacing(1)
+		margin: theme.spacing(1),
 	},
 	bottomBtn: {
-		position: 'fixed',
+		position: "fixed",
 		bottom: theme.spacing(9),
-		right: theme.spacing(2)
+		right: theme.spacing(2),
 	},
 	activatedUser: {
-		color: 'green'
+		color: "green",
 	},
 	deactivatedUser: {
-		color: 'grey'
-	}
+		color: "grey",
+	},
+	userList: {
+		color: "green",
+		marginLeft: 20,
+		"&:hover": {
+			textDecoration: "underline",
+			cursor: "pointer",
+		},
+	},
+	visibility: {
+		"&:hover": {
+			cursor: "pointer",
+		},
+	},
 	// watermark: {
 	// 	alignItems: "center",
 	// 	display: "flex",
@@ -91,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ListUser = (props) => {
-	const [checked, setChecked] = React.useState(['wifi']);
+	const [checked, setChecked] = React.useState(["wifi"]);
 	const license = useSelector((state) => state.License.one);
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -108,14 +122,13 @@ const ListUser = (props) => {
 	// 	setChecked(newChecked);
 	// };
 	useEffect(() => {
-		console.log('123');
 		dispatch({
 			type: Types.GET_ONE,
 			payload: {
 				id: props.licenseId,
 				action: ActionTypes.LICENSE_GET_ONE,
-				path: 'licenses'
-			}
+				path: "licenses",
+			},
 		});
 		// return () => {
 		// 	dispatch({
@@ -152,7 +165,7 @@ const ListUser = (props) => {
 										<Brightness1Icon
 											fontSize="small"
 											className={
-												item.status === 'ACTIVATED'
+												item.status === "ACTIVATED"
 													? classes.activatedUser
 													: classes.deactivatedUser
 											}
@@ -161,7 +174,7 @@ const ListUser = (props) => {
 								</ListItem>
 							);
 					  })
-					: ''}
+					: ""}
 			</List>
 		</React.Fragment>
 	);
@@ -171,7 +184,7 @@ const LicenseManagement = () => {
 	const classes = useStyles();
 	const history = useHistory();
 	const [open, setOpen] = React.useState(false);
-	const [id, setId] = React.useState('');
+	const [id, setId] = React.useState("");
 	const [isShowLicense, setIsShowLicense] = React.useState(false);
 	const handleClickOpen = (id) => {
 		setId(id);
@@ -200,8 +213,8 @@ const LicenseManagement = () => {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.LICENSE_GET_LIST,
-				path: `licenses`
-			}
+				path: `licenses`,
+			},
 		});
 	}, []);
 	return (
@@ -211,22 +224,16 @@ const LicenseManagement = () => {
 				{licenses.length > 0 &&
 					licenses.map((item) => {
 						return (
-							<Grid
-								item
-								xs={12}
-								lg={4}
-								onClick={() => handleClickOpen(item.id)}
-								key={item.id}
-							>
+							<Grid item xs={12} lg={4} key={item.id}>
 								<Grow in={true}>
 									<Paper
 										className={clsx(
 											classes.paper,
-											item.status === 'PENDING' &&
+											item.status === "PENDING" &&
 												classes.pending,
-											item.status === 'ACTIVATED' &&
+											item.status === "ACTIVATED" &&
 												classes.activated,
-											item.status === 'DEACTIVATED' &&
+											item.status === "DEACTIVATED" &&
 												classes.deactivated
 										)}
 									>
@@ -240,12 +247,12 @@ const LicenseManagement = () => {
 								</div>
 							</div> */}
 										<Grid container>
-											<Grid item sm={5} xs={12}>
+											<Grid item sm={12} xs={12}>
 												<Typography variant="subtitle2">
 													Organization:
 												</Typography>
 											</Grid>
-											<Grid item sm={7} xs={12}>
+											<Grid item sm={12} xs={12}>
 												<Typography variant="subtitle2">
 													{item.namespace}
 												</Typography>
@@ -261,7 +268,7 @@ const LicenseManagement = () => {
 												<Typography variant="subtitle2">
 													{moment(
 														item.start_date
-													).format('DD-MM-YYYY')}
+													).format("DD-MM-YYYY")}
 												</Typography>
 											</Grid>
 										</Grid>
@@ -275,7 +282,7 @@ const LicenseManagement = () => {
 												<Typography variant="subtitle2">
 													{moment(
 														item.end_date
-													).format('DD-MM-YYYY')}
+													).format("DD-MM-YYYY")}
 												</Typography>
 											</Grid>
 										</Grid>
@@ -285,38 +292,65 @@ const LicenseManagement = () => {
 													Remain/Limit:
 												</Typography>
 											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="subtitle2">
+											<Grid item xs={7}>
+												<Typography
+													variant="subtitle2"
+													component="span"
+												>
 													{item.activated_user}/
 													{item.user_limit}
+												</Typography>
+												<Typography
+													variant="subtitle2"
+													component="a"
+													onClick={() =>
+														handleClickOpen(item.id)
+													}
+													className={classes.userList}
+												>
+													Detail
 												</Typography>
 											</Grid>
 										</Grid>
 										<Typography variant="caption">
-											<Grid container>
-												<Grid item xs={11}>
+											<Grid
+												container
+												style={{
+													display: "flex",
+													alignItems: "center",
+												}}
+											>
+												<Grid item xs={10}>
 													<Typography variant="subtitle2">
 														LICENSE KEY:
 														{id === item.id &&
 														isShowLicense
 															? item.license
-															: '*********'}
+															: "*********"}
 													</Typography>
 												</Grid>
-												<Grid item xs={1}>
+												<Grid item xs={2}>
 													{id == item.id &&
 													isShowLicense ? (
-														<VisibilityIcon
+														<IconButton
 															onClick={showLicense(
 																item
 															)}
-														/>
+														>
+															<VisibilityIcon
+															// className={
+															// 	classes.visibility
+															// }
+															/>
+														</IconButton>
 													) : (
-														<VisibilityOffIcon
+														<IconButton
 															onClick={hideLicense(
 																item
 															)}
-														/>
+														>
+															<VisibilityOffIcon />
+														</IconButton>
 													)}
 												</Grid>
 											</Grid>
@@ -333,7 +367,7 @@ const LicenseManagement = () => {
 					color="secondary"
 					aria-label="add"
 					className={classes.margin}
-					onClick={() => history.push('/license/create')}
+					onClick={() => history.push("/license/create")}
 				>
 					<AddIcon />
 				</Fab>
@@ -342,7 +376,7 @@ const LicenseManagement = () => {
 			<ListUserDialog
 				open={open}
 				onHandleClose={handleClose}
-				title={'List User'}
+				title={"List User"}
 				licenseId={id}
 				content={ListUser}
 			/>

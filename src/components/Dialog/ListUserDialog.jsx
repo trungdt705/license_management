@@ -6,16 +6,16 @@ import {
 	IconButton,
 	useMediaQuery,
 	useTheme,
-	Grid
-} from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+	Grid,
+} from "@material-ui/core";
+import { Close as CloseIcon } from "@material-ui/icons";
+import React from "react";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
 	backDrop: {
-		background: 'rgba(180, 180, 180, 0.5)'
-	}
+		background: "rgba(180, 180, 180, 0.5)",
+	},
 }));
 
 export default function AlertDialog(props) {
@@ -24,7 +24,7 @@ export default function AlertDialog(props) {
 	const dispatch = useDispatch();
 	const [fullWidth, setFullWidth] = React.useState(true);
 	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 	return (
 		<div>
@@ -37,21 +37,27 @@ export default function AlertDialog(props) {
 				aria-describedby="alert-dialog-description"
 				BackdropProps={{
 					classes: {
-						root: classes.backDrop
-					}
+						root: classes.backDrop,
+					},
 				}}
 			>
 				<DialogTitle
 					id="alert-dialog-title"
 					style={{
-						borderBottom: '1px solid #f5f0f0'
+						borderBottom: "1px solid #f5f0f0",
 					}}
 				>
-					<Grid container>
-						<Grid item xs={10}>
+					<Grid
+						container
+						style={{
+							display: "flex",
+							alignItems: "center",
+						}}
+					>
+						<Grid item xs={11}>
 							List User
 						</Grid>
-						<Grid item xs={2}>
+						<Grid item xs={1}>
 							<IconButton
 								edge="end"
 								color="inherit"

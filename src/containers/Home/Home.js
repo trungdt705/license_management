@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(1),
 		textAlign: "center",
 		color: theme.palette.text.secondary,
+		"&:hover": {
+			cursor: "pointer",
+			backgroundColor: "#c0c0c0",
+		},
 	},
 	removeLinkLine: {
 		textDecoration: "none",
