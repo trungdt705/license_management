@@ -53,7 +53,6 @@ const Setting = () => {
 	const totalPackages = useSelector((state) => state.Partner.package);
 	const totalLicenses = useSelector((state) => state.Partner.license);
 	useEffect(() => {
-		console.log("useEffect");
 		dispatch({ type: "PARTNER_GET_INFO" });
 	}, []);
 	return (
