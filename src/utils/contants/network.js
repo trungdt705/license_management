@@ -1,1 +1,1 @@
-export const BASE_URL = "http://api.giadungthongminh.press/api";
+export const BASE_URL = "https://api.giadungthongminh.press/api";
