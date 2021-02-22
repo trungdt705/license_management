@@ -1,22 +1,17 @@
-import React from "react";
-import {
-	withStyles,
-	Tab,
-	Tabs,
-	Typography,
-	makeStyles,
-} from "@material-ui/core";
-import TabPanel from "./TabPanel";
+import { makeStyles, Tab, Tabs, withStyles } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Features from "../Application/Features";
-import Modules from "../Application/Modules";
 import LicenseTypes from "../Application/LicenseType";
+import Modules from "../Application/Modules";
+import TabPanel from "./TabPanel";
 const CustomTab = withStyles((theme) => ({
 	root: {
-		borderBottom: "1px solid #e8e8e8",
+		borderBottom: "1px solid #e8e8e8"
 	},
 	indicator: {
-		backgroundColor: theme.palette.secondary.main,
-	},
+		backgroundColor: theme.palette.secondary.main
+	}
 }))(Tabs);
 
 const AntTab = withStyles((theme) => ({
@@ -27,36 +22,42 @@ const AntTab = withStyles((theme) => ({
 		marginRight: theme.spacing(1),
 		"&:hover": {
 			color: theme.palette.secondary.main,
-			opacity: 1,
+			opacity: 1
 		},
 		"&$selected": {
 			color: theme.palette.secondary.main,
-			fontWeight: theme.typography.fontWeightMedium,
+			fontWeight: theme.typography.fontWeightMedium
 		},
 		"&:focus": {
-			color: theme.palette.secondary.main,
-		},
+			color: theme.palette.secondary.main
+		}
 	},
-	selected: {},
+	selected: {}
 }))((props) => <Tab disableRipple {...props} />);
 
 function a11yProps(index) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
-		"aria-controls": `scrollable-auto-tabpanel-${index}`,
+		"aria-controls": `scrollable-auto-tabpanel-${index}`
 	};
 }
 
 const useStyles = makeStyles((theme) => ({
-	demo: { backgroundColor: theme.palette.background.paper },
+	demo: { backgroundColor: theme.palette.background.paper }
 }));
 
 const ApplicationTab = (props) => {
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	const dispatch = useDispatch();
+	const value = useSelector((state) => state.Application.tabIndex);
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		dispatch({ type: "TAB_INDEX", payload: newValue });
 	};
+	useEffect(() => {
+		// return () => {
+		// 	dispatch({ type: "TAB_INDEX", payload: 0 });
+		// };
+	}, []);
 	return (
 		<div className={classes.demo}>
 			<CustomTab

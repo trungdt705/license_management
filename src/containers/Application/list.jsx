@@ -6,12 +6,9 @@ import {
 	Typography,
 	Avatar,
 	IconButton,
-	Paper,
+	Paper
 } from "@material-ui/core";
-import {
-	Pageview as PageviewIcon,
-	AddBox as AddBoxIcon,
-} from "@material-ui/icons";
+import { Ballot as BallotIcon, AddBox as AddBoxIcon } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { pink } from "@material-ui/core/colors";
 import moment from "moment-timezone";
@@ -24,13 +21,12 @@ import CustomsizeIcon from "../../components/Icon/LargeIcon";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	avatarColor: {
-		color: theme.palette.getContrastText(pink[500]),
-		backgroundColor: pink[500],
+		backgroundColor: theme.palette.secondary.main,
 		width: theme.spacing(4),
-		height: theme.spacing(4),
+		height: theme.spacing(4)
 	},
 	add: {
 		display: "flex",
@@ -38,20 +34,20 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		minHeight: 57,
 		border: "3px dashed #d1cfd4",
-		backgroundColor: "#e9e6ed",
+		backgroundColor: "#e9e6ed"
 	},
 	showLink: {
 		"&:hover": {
-			textDecoration: "underline",
-		},
-	},
+			textDecoration: "underline"
+		}
+	}
 }));
 
 const CardIcon = (props) => {
 	const classes = useStyles();
 	return (
 		<Avatar className={classes.avatarColor}>
-			<PageviewIcon fontSize="small" />
+			<BallotIcon fontSize="small" />
 		</Avatar>
 	);
 };
@@ -62,7 +58,7 @@ const CardContent = (props) => {
 	const classes = useStyles();
 	const applicationInfoPage = (id) => {
 		history.push(`/applications/${id}/detail`, {
-			title: "Application Detail",
+			title: "Application Detail"
 		});
 	};
 	return (
@@ -87,7 +83,7 @@ const CardAction = (props) => {
 	const goToEdit = (event) => {
 		event.stopPropagation();
 		history.push(`/applications/${data.id}/edit`, {
-			title: "Edit application",
+			title: "Edit application"
 		});
 	};
 	return (
@@ -99,8 +95,8 @@ const CardAction = (props) => {
 					payload: {
 						id: data.id,
 						path: "applications",
-						action: ActionTypes.APPLICATION_DELETE,
-					},
+						action: ActionTypes.APPLICATION_DELETE
+					}
 				}}
 			/>
 		</React.Fragment>
@@ -117,8 +113,8 @@ export default function ApplicationList() {
 			type: Types.GET_LIST,
 			payload: {
 				action: "APPLICATION_GET_LIST",
-				path: "applications",
-			},
+				path: "applications"
+			}
 		});
 		// return () => {
 		// 	dispatch({ type: "destroy_session" });
@@ -133,7 +129,7 @@ export default function ApplicationList() {
 						<IconButton
 							onClick={() =>
 								history.push("/applications/create", {
-									title: "Create Application",
+									title: "Create Application"
 								})
 							}
 						>

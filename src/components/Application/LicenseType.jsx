@@ -1,6 +1,6 @@
 import { Avatar, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Pageview as PageviewIcon } from "@material-ui/icons";
+import { Ballot as BallotIcon } from "@material-ui/icons";
 import React, { useEffect } from "react";
 import DeleteIconButton from "../Button/DeleteIconButton";
 import EditIconButton from "../Button/EditIconButton";
@@ -16,16 +16,21 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		"& > *": {
-			margin: theme.spacing(1),
-		},
+			margin: theme.spacing(1)
+		}
 	},
+	avatarColor: {
+		backgroundColor: theme.palette.secondary.main,
+		width: theme.spacing(4),
+		height: theme.spacing(4)
+	}
 }));
 
 const CardIcon = (props) => {
 	const classes = useStyles();
 	return (
-		<Avatar>
-			<CustomsizeIcon component={PageviewIcon} spacing={3} />
+		<Avatar className={classes.avatarColor}>
+			<BallotIcon />
 		</Avatar>
 	);
 };
@@ -63,7 +68,7 @@ const CardAction = (props) => {
 				edge="end"
 				onGotoEdit={() =>
 					history.push(`/license-types/${data.id}/edit`, {
-						title: "Edit License Type",
+						title: "Edit License Type"
 					})
 				}
 			/>
@@ -73,8 +78,8 @@ const CardAction = (props) => {
 					payload: {
 						id: data.id,
 						path: "license_types",
-						action: ActionTypes.LICENSETYPE_DELETE,
-					},
+						action: ActionTypes.LICENSETYPE_DELETE
+					}
 				}}
 			/>
 		</React.Fragment>
@@ -90,8 +95,8 @@ export default function LicenseTypes(props) {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.LICENSETYPE_GET_LIST,
-				path: `license_types?app=${props.appId}`,
-			},
+				path: `license_types?app=${props.appId}`
+			}
 		});
 	}, []);
 

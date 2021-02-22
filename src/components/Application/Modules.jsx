@@ -1,115 +1,131 @@
-import {
-	Accordion,
-	AccordionDetails,
-	AccordionSummary,
-	Grid,
-	Typography,
-	List,
-	Button,
-} from "@material-ui/core";
+import { Avatar, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-	AddBox as AddBoxIcon,
-	ExpandMore as ExpandMoreIcon,
-} from "@material-ui/icons/";
+import { Ballot as BallotIcon } from "@material-ui/icons";
 import React, { useEffect } from "react";
+import DeleteIconButton from "../Button/DeleteIconButton";
+import EditIconButton from "../Button/EditIconButton";
+import CommonCard from "../Card/CommonCard";
+import CustomsizeIcon from "../Icon/LargeIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import * as ActionTypes from "../../store/Package/Types";
-// import Features from "./Features";
 import * as Types from "../../store/sagas/commonType";
+import moment from "moment-timezone";
 import AddButton from "../Button/AddButton";
-import ListItemContent from "../ListItem/ListItemContent";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: "100%",
+		"& > *": {
+			margin: theme.spacing(1)
+		}
 	},
-	heading: {
-		fontSize: theme.typography.pxToRem(15),
-		flexBasis: "66.67%",
-		flexShrink: 0,
-	},
-	secondaryHeading: {
-		fontSize: theme.typography.pxToRem(15),
-		color: theme.palette.text.secondary,
-	},
+	avatarColor: {
+		backgroundColor: theme.palette.secondary.main,
+		width: theme.spacing(4),
+		height: theme.spacing(4)
+	}
 }));
 
-export default function ApplicationModules(props) {
+const CardIcon = (props) => {
 	const classes = useStyles();
-	const [expanded, setExpanded] = React.useState(false);
-	const history = useHistory();
-	const [dense] = React.useState(false);
-	const handleChange = (panel) => (event, isExpanded) => {
-		setExpanded(isExpanded ? panel : false);
-	};
+	return (
+		<Avatar className={classes.avatarColor}>
+			<BallotIcon />
+		</Avatar>
+	);
+};
 
-	const packages = useSelector((state) => state.Package.data);
+const CardContent = (props) => {
+	const { data } = props;
+	return (
+		<React.Fragment>
+			<Typography variant="subtitle2">{data.name}</Typography>
+			<Typography variant="caption">
+				Published: {moment(data.created_at).format("DD-MM-YYYY")}
+			</Typography>
+			{/* <Typography>
+				<StyledBadge
+					badgeContent={4}
+					color="secondary"
+					style={{ marginRight: 20 }}
+				>
+					<AppsIcon />
+				</StyledBadge>
+				<StyledBadge badgeContent={4} color="primary">
+					<AppsIcon />
+				</StyledBadge>
+			</Typography> */}
+		</React.Fragment>
+	);
+};
+
+const CardAction = (props) => {
+	const history = useHistory();
+	const { data } = props;
+	return (
+		<React.Fragment>
+			<EditIconButton
+				edge="end"
+				onGotoEdit={() =>
+					history.push(`/packages/${data.id}/edit`, {
+						title: "Edit Package"
+					})
+				}
+			/>
+			<DeleteIconButton
+				actionPayload={{
+					type: "DELETE",
+					payload: {
+						id: data.id,
+						path: "packages",
+						action: ActionTypes.PACKAGE_DELETE
+					}
+				}}
+			/>
+		</React.Fragment>
+	);
+};
+
+export default function LicenseTypes(props) {
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const packages = useSelector((state) => state.Package.data);
 	useEffect(() => {
 		dispatch({
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.PACKAGE_GET_LIST,
-				path: `packages?app=${props.appId}`,
-			},
+				path: `packages?app=${props.appId}`
+			}
 		});
 	}, []);
 
 	return (
-		<div className={classes.root}>
+		<React.Fragment>
 			<Typography
 				component="h1"
 				variant="h4"
-				style={{ textAlign: "right", marginBottom: 10 }}
+				style={{ textAlign: "right" }}
 			>
 				<AddButton
 					action={() => history.push("/packages/create")}
 				></AddButton>
 			</Typography>
-			{packages.length > 0 &&
-				packages.map((item) => {
-					return (
-						<React.Fragment>
-							<Accordion
-								expanded={expanded === item.id}
-								onChange={handleChange(item.id)}
-								elevation={0}
+			<Grid container spacing={1} style={{ marginTop: 4 }}>
+				{packages.length > 0 &&
+					packages.map((item) => {
+						return (
+							<CommonCard
 								key={item.id}
-							>
-								<AccordionSummary
-									expandIcon={<ExpandMoreIcon />}
-									aria-controls={`${item.id}-content`}
-									id={`${item.id}-header`}
-								>
-									<Typography className={classes.heading}>
-										{item.name}
-									</Typography>
-									{/* <Typography className={classes.secondaryHeading}>
-								Priority: {item.priority}
-							</Typography> */}
-								</AccordionSummary>
-								<AccordionDetails>
-									<Grid container>
-										{item.features.map((feature) => {
-											return (
-												<Grid item xs={12} md={12}>
-													<List dense={dense}>
-														<ListItemContent
-															text={feature.name}
-															id={feature.id}
-														/>
-													</List>
-												</Grid>
-											);
-										})}
-									</Grid>
-								</AccordionDetails>
-							</Accordion>
-						</React.Fragment>
-					);
-				})}
-		</div>
+								cardIcon={CardIcon}
+								cardContent={CardContent}
+								cardAction={CardAction}
+								variant="outlined"
+								data={item}
+							/>
+						);
+					})}
+			</Grid>
+		</React.Fragment>
 	);
 }

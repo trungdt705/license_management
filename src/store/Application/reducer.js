@@ -4,6 +4,7 @@ import { remove } from "lodash";
 const INITIAL_STATE = {
 	data: [],
 	one: {},
+	tabIndex: 0
 };
 
 // Replace with you own reducer
@@ -12,24 +13,29 @@ export default (state = INITIAL_STATE, action) => {
 		case types.APPLICATION_GET_LIST:
 			return {
 				...state,
-				data: action.payload,
+				data: action.payload
 			};
 		case types.APPLICATION_CREATE:
 			return {
 				...state,
-				...action.payload,
+				...action.payload
 			};
 		case types.APPLICATION_GET_ONE:
 			return {
 				...state,
-				one: action.payload,
+				one: action.payload
 			};
 		case types.APPLICATION_DELETE:
 			let newData = [...state.data];
 			remove(newData, (item) => item.id === action.payload.id);
 			return {
 				...state,
-				data: newData,
+				data: newData
+			};
+		case types.TAB_INDEX:
+			return {
+				...state,
+				tabIndex: action.payload
 			};
 		default:
 			return state;

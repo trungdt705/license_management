@@ -10,13 +10,13 @@ import {
 	ListItemText,
 	makeStyles,
 	Paper,
-	Typography,
+	Typography
 } from "@material-ui/core";
 import {
 	Add as AddIcon,
 	Brightness1 as Brightness1Icon,
 	Visibility as VisibilityIcon,
-	VisibilityOff as VisibilityOffIcon,
+	VisibilityOff as VisibilityOffIcon
 } from "@material-ui/icons";
 import clsx from "clsx";
 import moment from "moment-timezone";
@@ -29,7 +29,7 @@ import * as Types from "../../store/sagas/commonType";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	paper: {
 		padding: theme.spacing(1),
@@ -37,44 +37,44 @@ const useStyles = makeStyles((theme) => ({
 		color: theme.palette.text.secondary,
 		borderRadius: 10,
 		position: "relative",
-		borderLeft: `10px solid ${theme.palette.error.main}`,
+		borderLeft: `10px solid ${theme.palette.error.main}`
 	},
 	pending: {
-		borderLeft: `10px solid #e8dd13`,
+		borderLeft: `10px solid #e8dd13`
 	},
 	activated: {
-		borderLeft: `10px solid green`,
+		borderLeft: `10px solid green`
 	},
 	deactivated: {
-		borderLeft: `10px solid red`,
+		borderLeft: `10px solid red`
 	},
 	margin: {
-		margin: theme.spacing(1),
+		margin: theme.spacing(1)
 	},
 	bottomBtn: {
 		position: "fixed",
 		bottom: theme.spacing(9),
-		right: theme.spacing(2),
+		right: theme.spacing(2)
 	},
 	activatedUser: {
-		color: "green",
+		color: "green"
 	},
 	deactivatedUser: {
-		color: "grey",
+		color: "grey"
 	},
 	userList: {
 		color: "green",
 		marginLeft: 20,
 		"&:hover": {
 			textDecoration: "underline",
-			cursor: "pointer",
-		},
+			cursor: "pointer"
+		}
 	},
 	visibility: {
 		"&:hover": {
-			cursor: "pointer",
-		},
-	},
+			cursor: "pointer"
+		}
+	}
 	// watermark: {
 	// 	alignItems: "center",
 	// 	display: "flex",
@@ -127,8 +127,8 @@ const ListUser = (props) => {
 			payload: {
 				id: props.licenseId,
 				action: ActionTypes.LICENSE_GET_ONE,
-				path: "licenses",
-			},
+				path: "licenses"
+			}
 		});
 		// return () => {
 		// 	dispatch({
@@ -213,8 +213,8 @@ const LicenseManagement = () => {
 			type: Types.GET_LIST,
 			payload: {
 				action: ActionTypes.LICENSE_GET_LIST,
-				path: `licenses`,
-			},
+				path: `licenses`
+			}
 		});
 	}, []);
 	return (
@@ -317,7 +317,7 @@ const LicenseManagement = () => {
 												container
 												style={{
 													display: "flex",
-													alignItems: "center",
+													alignItems: "center"
 												}}
 											>
 												<Grid item xs={10}>
